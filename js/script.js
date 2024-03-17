@@ -2,6 +2,8 @@ let CCcountry = 0;
 const CCprice = [1150, 1100, 1300, 1200, 1150, 1250, 1400, 1300, 1300, 1300];
 const CCcollection = [597, 577, 587, 643, 637, 97, 703, 657, 797, 617];
 let CWcountry = 0;
+const CWprice = [600, 600, 600, 600, 600, 600, 800, 800, 800, 8000];
+const CWcollection = [297, 277, 287, 343, 337, 297, 403, 357, 497, 317]
 
 let calcCost = document.querySelector(".calc-cost");
 let calcwh = document.querySelector(".calc-wholesale");
@@ -109,8 +111,8 @@ CWBtnCalc.addEventListener('click', () => {
         }
     }
     const priceCar = Number(textFieldInput[0].value);
-    const priceColl = Number(CCcollection[CCcountry]);
-    const priceDelivery = Number(CCprice[CCcountry]);
+    const priceColl = Number(CWcollection[CCcountry]);
+    const priceDelivery = Number(CWprice[CCcountry]);
     const priceService =  Number(textFieldInput[1].value);
     const priceSwift = Number(2.5 * (priceCar + priceColl) / 100).toFixed(2);
     const priceAll = priceCar + priceColl + priceDelivery + priceService + Number(priceSwift) + 250 + 100 + 200;
