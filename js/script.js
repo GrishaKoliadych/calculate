@@ -15,15 +15,23 @@ for (let i = 0; i < tabMain.length; i++) {
             tabMain[j].classList.remove('active');
         tabMain[i].classList.add('active');
         if (i == 0) {
-            calcCost.style.display = "flex";
+            if (window.innerWidth > 1350) {
+                calcCost.style.display = "flex";
+                if (inputs.getBoundingClientRect().height < outputs.getBoundingClientRect().height) inputs.style.height = outputs.getBoundingClientRect().height + "px";
+                else outputs.style.height = inputs.getBoundingClientRect().height + "px";
+            }
+            else 
+                calcCost.style.display = "block";
             calcwh.style.display = "none";
-            if (inputs.getBoundingClientRect().height < outputs.getBoundingClientRect().height) inputs.style.height = outputs.getBoundingClientRect().height + "px";
-            else outputs.style.height = inputs.getBoundingClientRect().height + "px";
         } else {
-            calcwh.style.display = "flex";
+            if (window.innerWidth > 1350) {
+                calcwh.style.display = "flex";
+                if (CWinputs.getBoundingClientRect().height < CWoutputs.getBoundingClientRect().height) CWinputs.style.height = CWoutputs.getBoundingClientRect().height + "px";
+                else CWoutputs.style.height = CWinputs.getBoundingClientRect().height + "px";
+            }
+            else 
+                calcwh.style.display = "block";
             calcCost.style.display = "none";
-            if (CWinputs.getBoundingClientRect().height < CWoutputs.getBoundingClientRect().height) CWinputs.style.height = CWoutputs.getBoundingClientRect().height + "px";
-            else CWoutputs.style.height = CWinputs.getBoundingClientRect().height + "px";
         }
     });
 }
@@ -37,9 +45,10 @@ let CCBtnCalc = calcCost.querySelector(".btn-calc");
 let inputs = calcCost.querySelector(".inputs");
 let outputs = calcCost.querySelector(".outputs");
 
-if (inputs.getBoundingClientRect().height < outputs.getBoundingClientRect().height) inputs.style.height = outputs.getBoundingClientRect().height + "px";
-else outputs.style.height = inputs.getBoundingClientRect().height + "px";
-
+if (window.innerWidth > 1350) {
+    if (inputs.getBoundingClientRect().height < outputs.getBoundingClientRect().height) inputs.style.height = outputs.getBoundingClientRect().height + "px";
+    else outputs.style.height = inputs.getBoundingClientRect().height + "px";
+}
 
 CCselectHeader.addEventListener('click', () => {
     CCselectBody.style.width = CCselectHeader.getBoundingClientRect().width + "px";
