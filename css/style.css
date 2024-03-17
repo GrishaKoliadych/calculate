@@ -45,13 +45,11 @@ body {
 
 .calc-wholesale {
     margin: 1% 0% 0% 1% !important;
-    display: flex;
     align-items: center;
     display: none;
 }
 
 .inputs, .outputs {
-    vertical-align: top !important;
     margin: auto;
     background-color: #363636;
     border-radius: 5px;
@@ -159,4 +157,27 @@ input[type="number"]:focus {
     color: rgb(211, 211, 211);
     border-bottom: 2px solid #ef7230;
     margin-bottom: 30px;
+}
+
+@media screen and (max-width: 1350px) {
+
+    .calc-cost {
+        margin: 1% 0% 0% 1% !important;
+        display: block;
+    }
+    
+    .calc-wholesale {
+        margin: 1% 0% 0% 1% !important;
+        display: none;
+    }
+
+    .tab-main {
+        font-size: 0.9em;
+    }
+    
+    .inputs, .outputs {
+        margin-top: 5%;
+        font-size: 0.8em;
+        margin-bottom: 5%;
+    }
 }
