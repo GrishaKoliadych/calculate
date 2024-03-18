@@ -140,6 +140,29 @@ input[type="number"]:focus {
     box-shadow: 0px 0px 10px -2px rgba(239,114,48,1);
 }
 
+.inputs {
+    display: block !important;
+}
+
+.btn-clearance {
+    margin-top: 40px !important;
+    padding: 20px 40px;
+    background-color: #ef7230;
+    border-radius: 5px;
+    font-weight: 600;
+    float: left;
+}
+
+.btn-clearance a {
+    text-decoration: none;
+    color: white;
+}
+
+.btn-clearance:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 10px -2px rgba(239,114,48,1);
+}
+
 .left-info {
     float: left;
     padding-left: 10px;
@@ -160,14 +183,11 @@ input[type="number"]:focus {
 }
 
 @media screen and (max-width: 1350px) {
-
     .calc-cost {
-        margin: 1% 0% 0% 1% !important;
         display: block;
     }
     
     .calc-wholesale {
-        margin: 1% 0% 0% 1% !important;
         display: none;
     }
 
