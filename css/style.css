@@ -145,7 +145,7 @@ input[type="number"]:focus {
 }
 
 .btn-clearance {
-    margin-top: 40px !important;
+    margin-top: 20px !important;
     padding: 20px 40px;
     background-color: #ef7230;
     border-radius: 5px;
