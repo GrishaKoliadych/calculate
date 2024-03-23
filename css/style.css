@@ -34,7 +34,7 @@ body {
 }
 
 .active {
-    background-color: #ef7230;
+    background-color: #007FFF;
 }
 
 .calc-cost {
@@ -128,7 +128,7 @@ input[type="number"]:focus {
 
 .btn-calc {
     margin-top: 10px;
-    background-color: #ef7230;
+    background-color: #007FFF;
     padding: 10px 20px !important;
     border-radius: 5px;
     font-weight: 600;
@@ -137,7 +137,7 @@ input[type="number"]:focus {
 
 .btn-calc:hover {
     cursor: pointer;
-    box-shadow: 0px 0px 10px -2px rgba(239,114,48,1);
+    box-shadow: 0px 0px 10px -2px #007FFF;
 }
 
 .inputs {
@@ -147,7 +147,7 @@ input[type="number"]:focus {
 .btn-clearance {
     margin-top: 20px !important;
     padding: 20px 40px;
-    background-color: #ef7230;
+    background-color: #007FFF;
     border-radius: 5px;
     font-weight: 600;
     float: left;
@@ -160,7 +160,7 @@ a {
 
 .btn-clearance:hover {
     cursor: pointer;
-    box-shadow: 0px 0px 10px -2px rgba(239,114,48,1);
+    box-shadow: 0px 0px 10px -2px #007FFF;
 }
 
 .left-info {
@@ -168,7 +168,7 @@ a {
     padding-left: 10px;
     padding-bottom: 5px;
     color: rgb(211, 211, 211);
-    border-bottom: 2px solid #ef7230;
+    border-bottom: 2px solid #007FFF;
     margin-bottom: 30px;
 }
 
@@ -178,7 +178,7 @@ a {
     padding-bottom: 5px;
     text-align: right;
     color: rgb(211, 211, 211);
-    border-bottom: 2px solid #ef7230;
+    border-bottom: 2px solid #007FFF;
     margin-bottom: 30px;
 }
 
