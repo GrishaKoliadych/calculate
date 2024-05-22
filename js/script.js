@@ -1,133 +1,135 @@
 let CCcountry = 0;
-const CCprice = [1150, 1100, 1300, 1200, 1150, 1250, 1400, 1300, 1300, 1300];
 const CCcollection = [700, 700, 700, 800, 800, 700, 900, 900, 900, 900];
+let CCButton = 0;
+
 let CWcountry = 0;
-const CWprice = [600, 600, 600, 600, 600, 600, 800, 800, 800, 8000];
 const CWcollection = [700, 700, 700, 800, 800, 700, 900, 900, 900, 900];
+let CWButton = 0;
 
-let calcCost = document.querySelector(".calc-cost");
-let calcwh = document.querySelector(".calc-wholesale");
+$(document).ready(function() {
+    let calcCost = $(".calc-cost");
+    let calcwh = $(".calc-wholesale");
 
-let tabMain = document.querySelectorAll(".tab-main");
-for (let i = 0; i < tabMain.length; i++) {
-    tabMain[i].addEventListener('click', () => {
-        for (let j = 0; j < tabMain.length; j++)
-            tabMain[j].classList.remove('active');
-        tabMain[i].classList.add('active');
-        if (i == 0) {
-            if (window.innerWidth > 1350) {
-                calcCost.style.display = "flex";
-                if (inputs.getBoundingClientRect().height < outputs.getBoundingClientRect().height) inputs.style.height = outputs.getBoundingClientRect().height + "px";
-                else outputs.style.height = inputs.getBoundingClientRect().height + "px";
+    $(".tab-main").click(function() {
+        $(".tab-main").removeClass('active');
+        $(this).addClass('active');
+        if ($(this).index() == 0) {
+            if ($(window).width() > 1350) {
+                calcCost.css("display", "flex");
+                adjustHeight(calcCost);
+            } else {
+                calcCost.css("display", "block");
             }
-            else 
-                calcCost.style.display = "block";
-            calcwh.style.display = "none";
+            calcwh.css("display", "none");
         } else {
-            if (window.innerWidth > 1350) {
-                calcwh.style.display = "flex";
-                if (CWinputs.getBoundingClientRect().height < CWoutputs.getBoundingClientRect().height) CWinputs.style.height = CWoutputs.getBoundingClientRect().height + "px";
-                else CWoutputs.style.height = CWinputs.getBoundingClientRect().height + "px";
+            if ($(window).width() > 1350) {
+                calcwh.css("display", "flex");
+                adjustHeight(calcwh);
+            } else {
+                calcwh.css("display", "block");
             }
-            else 
-                calcwh.style.display = "block";
-            calcCost.style.display = "none";
+            calcCost.css("display", "none");
         }
     });
-}
 
-let CCselectHeader = calcCost.querySelector(".select-header");
-let CCselectBody = calcCost.querySelector(".select-body");
-let CCselectItem = calcCost.querySelectorAll(".select-item");
-let CCselectCurrent = calcCost.querySelector(".select-current");
-let CCBtnCalc = calcCost.querySelector(".btn-calc");
-
-let inputs = calcCost.querySelector(".inputs");
-let outputs = calcCost.querySelector(".outputs");
-
-if (window.innerWidth > 1350) {
-    if (inputs.getBoundingClientRect().height < outputs.getBoundingClientRect().height) inputs.style.height = outputs.getBoundingClientRect().height + "px";
-    else outputs.style.height = inputs.getBoundingClientRect().height + "px";
-}
-
-CCselectHeader.addEventListener('click', () => {
-    CCselectBody.style.width = CCselectHeader.getBoundingClientRect().width + "px";
-    CCselectBody.classList.toggle("is-active");
-});
-
-for (let i = 0; i < CCselectItem.length; i++) {
-    CCselectItem[i].addEventListener('click', () => {
-        CCselectCurrent.innerText = CCselectItem[i].innerText;
-        CCcountry = i;
-        CCselectBody.classList.toggle("is-active");
-    });
-}
-
-CCBtnCalc.addEventListener('click', () => {
-    let textFieldInput = calcCost.querySelectorAll(".text-field__input");
-    let rightInfo = calcCost.querySelectorAll(".right-info");
-    for (let i = 0; i < textFieldInput.length; i++) {
-        if (textFieldInput[i].value == '') {
-            textFieldInput[i].focus();
-            return;
+    function adjustHeight(container) {
+        let inputs = container.find(".inputs");
+        let outputs = container.find(".outputs");
+        if (inputs.outerHeight() < outputs.outerHeight()) {
+            inputs.css("height", outputs.outerHeight());
+        } else {
+            outputs.css("height", inputs.outerHeight());
         }
     }
-    const priceCar = Number(textFieldInput[0].value);
-    const priceColl = Number(CCcollection[CCcountry]);
-    const priceDelivery = Number(CCprice[CCcountry]);
-    const priceService =  Number(textFieldInput[1].value);
-    const priceSwift = Number(5 * (priceCar + priceColl) / 100).toFixed(2);
-    const priceAll = priceCar + priceColl + priceDelivery + priceService + Number(priceSwift) + 250 + 100 + 200;
-    rightInfo[0].innerText = priceCar + priceColl + " €";
-    rightInfo[1].innerText = priceDelivery + " €";
-    rightInfo[3].innerText = priceService + " €";
-    rightInfo[6].innerText = priceSwift + " €";
-    rightInfo[7].innerHTML = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(priceAll);
-});
 
+    if ($(window).width() > 1350) adjustHeight(calcCost);
 
+    let CCselectHeader = calcCost.find(".select-header");
+    let CCselectBody = calcCost.find(".select-body");
+    let CCselectItem = calcCost.find(".select-item");
+    let CCselectCurrent = calcCost.find(".select-current");
+    let CCBtnCalc = calcCost.find(".btn-calc");
+    let CCneon = calcCost.find(".neon");
 
-let CWselectHeader = calcwh.querySelector(".select-header");
-let CWselectBody = calcwh.querySelector(".select-body");
-let CWselectItem = calcwh.querySelectorAll(".select-item");
-let CWselectCurrent = calcwh.querySelector(".select-current");
-let CWBtnCalc = calcwh.querySelector(".btn-calc");
-
-let CWinputs = calcwh.querySelector(".inputs");
-let CWoutputs = calcwh.querySelector(".outputs");
-
-
-CWselectHeader.addEventListener('click', () => {
-    CWselectBody.style.width = CWselectHeader.getBoundingClientRect().width + "px";
-    CWselectBody.classList.toggle("is-active");
-});
-
-for (let i = 0; i < CWselectItem.length; i++) {
-    CWselectItem[i].addEventListener('click', () => {
-        CWselectCurrent.innerText = CWselectItem[i].innerText;
-        CWcountry = i;
-        CWselectBody.classList.toggle("is-active");
+    CCselectHeader.click(function() {
+        CCselectBody.css("width", CCselectHeader.outerWidth());
+        CCselectBody.toggleClass("is-active");
     });
-}
 
-CWBtnCalc.addEventListener('click', () => {
-    let textFieldInput = calcwh.querySelectorAll(".text-field__input");
-    let rightInfo = calcwh.querySelectorAll(".right-info");
-    for (let i = 0; i < textFieldInput.length; i++) {
-        if (textFieldInput[i].value == '') {
-            textFieldInput[i].focus();
-            return;
+    CCselectItem.click(function() {
+        CCselectCurrent.text($(this).text());
+        CCcountry = $(this).index();
+        CCselectBody.toggleClass("is-active");
+    });
+
+    CCneon.change(function() {
+        CCButton = this.checked ? 200 : 0;
+        calcCost.find(".right-info").eq(6).text(CCButton + " €");
+    });
+
+    CCBtnCalc.click(function() {
+        let textFieldInput = calcCost.find(".text-field__input");
+        let rightInfo = calcCost.find(".right-info");
+        for (let i = 0; i < textFieldInput.length; i++) {
+            if (textFieldInput.eq(i).val() === '') {
+                textFieldInput.eq(i).focus();
+                return;
+            }
         }
+        calculateCost(calcCost, CCcollection, CCcountry, CCButton, rightInfo);
+    });
+
+    let CWselectHeader = calcwh.find(".select-header");
+    let CWselectBody = calcwh.find(".select-body");
+    let CWselectItem = calcwh.find(".select-item");
+    let CWselectCurrent = calcwh.find(".select-current");
+    let CWBtnCalc = calcwh.find(".btn-calc");
+    let CWneon = calcwh.find(".neon");
+
+    CWselectHeader.click(function() {
+        CWselectBody.css("width", CWselectHeader.outerWidth());
+        CWselectBody.toggleClass("is-active");
+    });
+
+    CWselectItem.click(function() {
+        CWselectCurrent.text($(this).text());
+        CWcountry = $(this).index();
+        CWselectBody.toggleClass("is-active");
+    });
+
+    CWneon.change(function() {
+        CWButton = this.checked ? 200 : 0;
+        calcwh.find(".right-info").eq(6).text(CWButton + " €");
+    });
+
+    CWBtnCalc.click(function() {
+        let textFieldInput = calcwh.find(".text-field__input");
+        let rightInfo = calcwh.find(".right-info");
+        for (let i = 0; i < textFieldInput.length; i++) {
+            if (textFieldInput.eq(i).val() === '') {
+                textFieldInput.eq(i).focus();
+                return;
+            }
+        }
+        calculateCost(calcwh, CWcollection, CWcountry, CWButton, rightInfo);
+    });
+
+    function calculateCost(container, collection, country, button, rightInfo) {
+        let textFieldInput = container.find(".text-field__input");
+        const priceCar = Number(textFieldInput.eq(0).val());
+        const priceColl = Number(collection[country]);
+        const priceDelivery = container.is(calcCost) ? 1500 : 350;
+        const priceService = Number(textFieldInput.eq(1).val());
+        const priceEurope = Number(textFieldInput.eq(2).val());
+        const priceSwift = Number(5 * (priceCar + priceColl) / 100).toFixed(2);
+        const priceAll = priceCar + priceColl + priceDelivery + priceService + Number(priceSwift) + 250 + 100 + button + priceEurope;
+
+        rightInfo.eq(0).text(priceCar + " €");
+        rightInfo.eq(1).text(priceDelivery + " €");
+        rightInfo.eq(2).text(priceEurope + " €");
+        rightInfo.eq(4).text(priceService + " €");
+        rightInfo.eq(6).text(button + " €");
+        rightInfo.eq(7).text(priceSwift + " €");
+        rightInfo.eq(8).html(new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(priceAll));
     }
-    const priceCar = Number(textFieldInput[0].value);
-    const priceColl = Number(CWcollection[CCcountry]);
-    const priceDelivery = Number(CWprice[CCcountry]);
-    const priceService =  Number(textFieldInput[1].value);
-    const priceSwift = Number(2.5 * (priceCar + priceColl) / 100).toFixed(2);
-    const priceAll = priceCar + priceColl + priceDelivery + priceService + Number(priceSwift) + 250 + 60 + 200;
-    rightInfo[0].innerText = priceCar + priceColl + " €";
-    rightInfo[1].innerText = priceDelivery + " €";
-    rightInfo[3].innerText = priceService + " €";
-    rightInfo[6].innerText = priceSwift + " €";
-    rightInfo[7].innerHTML = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(priceAll);
 });
