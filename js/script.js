@@ -1,13 +1,12 @@
-let CCcountry = 0;
-const CCcollection = [700, 700, 700, 800, 800, 700, 900, 900, 900, 900];
-let CCButton = 0;
+let CCcountry = 0; //КРАIНА ОДИНОЧНИЙ
+let CCButton = 0; //КРАIНА ОПТОВИЙ
 
-let CWcountry = 0;
-const CWcollection = [700, 700, 700, 800, 800, 700, 900, 900, 900, 900];
-let CWButton = 0;
+let CWcountry = 0; //КНОПКА ОДИНОЧНИЙ
+let CWButton = 0; //КНОПКА ОПТОВИЙ
+const collection = [700, 700, 700, 800, 800, 700, 900, 900, 900, 900]; //АУК ЗБIР
 
-const crossBorder = [139, 99, 89, 185, 149, 139, 245, 149, 379, 189];
-const processingDocs = [249, 149, 269, 229, 259, 249, 229, 252, 189, 159];
+const crossBorder = [139, 99, 89, 185, 149, 139, 245, 149, 379, 189]; //ТРАНСКОРДОННI
+const processingDocs = [249, 149, 269, 229, 259, 249, 229, 252, 189, 159]; //ОБРОБКА ДОКУМЕНТIВ
 
 $(document).ready(function() {
     let calcCost = $(".calc-cost");
@@ -79,7 +78,7 @@ $(document).ready(function() {
                 return;
             }
         }
-        calculateCost(calcCost, CCcollection, CCcountry, CCButton, rightInfo, true);
+        calculateCost(calcCost, CCcountry, CCButton, rightInfo, true);
     });
 
     let CWselectHeader = calcwh.find(".select-header");
@@ -114,10 +113,10 @@ $(document).ready(function() {
                 return;
             }
         }
-        calculateCost(calcwh, CWcollection, CWcountry, CWButton, rightInfo, false);
+        calculateCost(calcwh, CWcountry, CWButton, rightInfo, false);
     });
 
-    function calculateCost(container, collection, country, button, rightInfo, deliveryPrice) {
+    function calculateCost(container, country, button, rightInfo, deliveryPrice) {
         let textFieldInput = container.find(".text-field__input");
         const priceCar = Number(textFieldInput.eq(0).val()) + Number(crossBorder[country]) + Number(processingDocs[country]);
         const priceColl = Number(collection[country]);
@@ -127,7 +126,7 @@ $(document).ready(function() {
         const priceSwift = Number(5 * (priceCar + priceColl) / 100).toFixed(2);
         const priceAll = priceCar + priceColl + priceDelivery + priceService + Number(priceSwift) + 250 + 100 + button + priceEurope;
 
-        let del = 0;
+        let del = 0; //НАЦIНКА НА ДОСТАВКУ
         if (deliveryPrice) {
             if (priceAll < 6000) del = 550;
             else if (priceAll > 6000 && priceAll < 8000) del = 960;
