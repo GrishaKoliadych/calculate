@@ -140,7 +140,7 @@ $(document).ready(function() {
         rightInfo.eq(4).text(getFormatValue(priceService));
         rightInfo.eq(6).text(getFormatValue(button));
         rightInfo.eq(7).text(getFormatValue(priceSwift));
-        rightInfo.eq(8).html(getFormatValue(priceAll + del * 2));
+        rightInfo.eq(8).html(getFormatValue(priceAll + del));
     }
 
     function getFormatValue(value) {
