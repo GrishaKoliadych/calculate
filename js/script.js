@@ -6,6 +6,9 @@ let CWcountry = 0;
 const CWcollection = [700, 700, 700, 800, 800, 700, 900, 900, 900, 900];
 let CWButton = 0;
 
+const crossBorder = [139, 99, 89, 185, 149, 139, 245, 149, 379, 189];
+const processingDocs = [249, 149, 269, 229, 259, 249, 229, 252, 189, 159];
+
 $(document).ready(function() {
     let calcCost = $(".calc-cost");
     let calcwh = $(".calc-wholesale");
@@ -76,7 +79,7 @@ $(document).ready(function() {
                 return;
             }
         }
-        calculateCost(calcCost, CCcollection, CCcountry, CCButton, rightInfo);
+        calculateCost(calcCost, CCcollection, CCcountry, CCButton, rightInfo, true);
     });
 
     let CWselectHeader = calcwh.find(".select-header");
@@ -111,25 +114,36 @@ $(document).ready(function() {
                 return;
             }
         }
-        calculateCost(calcwh, CWcollection, CWcountry, CWButton, rightInfo);
+        calculateCost(calcwh, CWcollection, CWcountry, CWButton, rightInfo, false);
     });
 
-    function calculateCost(container, collection, country, button, rightInfo) {
+    function calculateCost(container, collection, country, button, rightInfo, deliveryPrice) {
         let textFieldInput = container.find(".text-field__input");
-        const priceCar = Number(textFieldInput.eq(0).val());
+        const priceCar = Number(textFieldInput.eq(0).val()) + Number(crossBorder[country]) + Number(processingDocs[country]);
         const priceColl = Number(collection[country]);
-        const priceDelivery = container.is(calcCost) ? 1500 : 350;
+        const priceDelivery = 450
         const priceService = Number(textFieldInput.eq(1).val());
         const priceEurope = Number(textFieldInput.eq(2).val());
         const priceSwift = Number(5 * (priceCar + priceColl) / 100).toFixed(2);
         const priceAll = priceCar + priceColl + priceDelivery + priceService + Number(priceSwift) + 250 + 100 + button + priceEurope;
 
-        rightInfo.eq(0).text(priceCar + " €");
-        rightInfo.eq(1).text(priceDelivery + " €");
-        rightInfo.eq(2).text(priceEurope + " €");
-        rightInfo.eq(4).text(priceService + " €");
-        rightInfo.eq(6).text(button + " €");
-        rightInfo.eq(7).text(priceSwift + " €");
-        rightInfo.eq(8).html(new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(priceAll));
+        let del = 0;
+        if (deliveryPrice) {
+            if (priceAll + 550 < 6000) del = 550;
+            else if (priceAll + 960 > 6000 && priceAll + 960 < 8000) del = 960;
+            else del = 1500
+        }
+
+        rightInfo.eq(0).text(getFormatValue(priceCar));
+        rightInfo.eq(1).text(getFormatValue(priceDelivery + del));
+        rightInfo.eq(2).text(getFormatValue(priceEurope));
+        rightInfo.eq(4).text(getFormatValue(priceService));
+        rightInfo.eq(6).text(getFormatValue(button));
+        rightInfo.eq(7).text(getFormatValue(priceSwift));
+        rightInfo.eq(8).html(getFormatValue(priceAll + del));
+    }
+
+    function getFormatValue(value) {
+        return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(value);
     }
 });
