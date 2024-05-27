@@ -129,8 +129,8 @@ $(document).ready(function() {
 
         let del = 0;
         if (deliveryPrice) {
-            if (priceAll + 550 < 6000) del = 550;
-            else if (priceAll + 960 > 6000 && priceAll + 960 < 8000) del = 960;
+            if (priceAll < 6000) del = 550;
+            else if (priceAll > 6000 && priceAll < 8000) del = 960;
             else del = 1500
         }
 
