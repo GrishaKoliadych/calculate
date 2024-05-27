@@ -19,17 +19,15 @@ $(document).ready(function() {
             if ($(window).width() > 1350) {
                 calcCost.css("display", "flex");
                 adjustHeight(calcCost);
-            } else {
+            } else
                 calcCost.css("display", "block");
-            }
             calcwh.css("display", "none");
         } else {
             if ($(window).width() > 1350) {
                 calcwh.css("display", "flex");
                 adjustHeight(calcwh);
-            } else {
+            } else
                 calcwh.css("display", "block");
-            }
             calcCost.css("display", "none");
         }
     });
@@ -37,112 +35,131 @@ $(document).ready(function() {
     function adjustHeight(container) {
         let inputs = container.find(".inputs");
         let outputs = container.find(".outputs");
-        if (inputs.outerHeight() < outputs.outerHeight()) {
+        if (inputs.outerHeight() < outputs.outerHeight())
             inputs.css("height", outputs.outerHeight());
-        } else {
+        else
             outputs.css("height", inputs.outerHeight());
-        }
     }
 
     if ($(window).width() > 1350) adjustHeight(calcCost);
 
-    let CCselectHeader = calcCost.find(".select-header");
-    let CCselectBody = calcCost.find(".select-body");
-    let CCselectItem = calcCost.find(".select-item");
-    let CCselectCurrent = calcCost.find(".select-current");
-    let CCBtnCalc = calcCost.find(".btn-calc");
-    let CCneon = calcCost.find(".neon");
-
-    CCselectHeader.click(function() {
-        CCselectBody.css("width", CCselectHeader.outerWidth());
-        CCselectBody.toggleClass("is-active");
+    //ОДИНОЧНИЙ КАЛЬКУЛЯТОР
+    calcCost.find(".select-header").each(function() {
+        let header = $(this);
+        let sbody = header.next(".select-body");
+        let items = sbody.find(".select-item");
+        let current = header.find(".select-current");
+    
+        header.click(function() {
+            sbody.css("width", header.outerWidth());
+            sbody.toggleClass("is-active");
+        });
+    
+        items.click(function() {
+            current.text($(this).text());
+            CCcountry = $(this).index();
+            sbody.toggleClass("is-active");
+        });
     });
 
-    CCselectItem.click(function() {
-        CCselectCurrent.text($(this).text());
-        CCcountry = $(this).index();
-        CCselectBody.toggleClass("is-active");
+    calcCost.find(".neon").each(function() {
+        $(this).change(function() {
+            CCButton = this.checked ? 200 : 0;
+            $(this).closest('.calc-cost').find(".right-info").eq(6).text(CCButton + ",00 €");
+        });
     });
-
-    CCneon.change(function() {
-        CCButton = this.checked ? 200 : 0;
-        calcCost.find(".right-info").eq(6).text(CCButton + " €");
-    });
-
-    CCBtnCalc.click(function() {
-        let textFieldInput = calcCost.find(".text-field__input");
-        let rightInfo = calcCost.find(".right-info");
-        for (let i = 0; i < textFieldInput.length; i++) {
-            if (textFieldInput.eq(i).val() === '') {
-                textFieldInput.eq(i).focus();
-                return;
+    
+    calcCost.find(".btn-calc").each(function() {
+        $(this).click(function() {
+            let cCInstance = $(this).closest('.calc-cost');
+            let textFieldInput = cCInstance.find(".text-field__input");
+            let rightInfo = cCInstance.find(".right-info");
+            for (let i = 0; i < textFieldInput.length; i++) {
+                if (textFieldInput.eq(i).val() === '') {
+                    textFieldInput.eq(i).focus();
+                    return;
+                }
             }
-        }
-        calculateCost(calcCost, CCcountry, CCButton, rightInfo, true);
+            calculateCost(cCInstance, CCcountry, CCButton, rightInfo, true);
+        });
     });
 
-    let CWselectHeader = calcwh.find(".select-header");
-    let CWselectBody = calcwh.find(".select-body");
-    let CWselectItem = calcwh.find(".select-item");
-    let CWselectCurrent = calcwh.find(".select-current");
-    let CWBtnCalc = calcwh.find(".btn-calc");
-    let CWneon = calcwh.find(".neon");
-
-    CWselectHeader.click(function() {
-        CWselectBody.css("width", CWselectHeader.outerWidth());
-        CWselectBody.toggleClass("is-active");
+    //ОПТОВИЙ КАЛЬКУЛЯТОР
+    calcwh.find(".select-header").each(function() {
+        let header = $(this);
+        let sbody = header.next(".select-body");
+        let items = sbody.find(".select-item");
+        let current = header.find(".select-current");
+    
+        header.click(function() {
+            sbody.css("width", header.outerWidth());
+            sbody.toggleClass("is-active");
+        });
+    
+        items.click(function() {
+            current.text($(this).text());
+            CWcountry = $(this).index();
+            sbody.toggleClass("is-active");
+        });
     });
 
-    CWselectItem.click(function() {
-        CWselectCurrent.text($(this).text());
-        CWcountry = $(this).index();
-        CWselectBody.toggleClass("is-active");
+    calcwh.find(".neon").each(function() {
+        $(this).change(function() {
+            CWButton = this.checked ? 200 : 0;
+            $(this).closest('.calc-wholesale').find(".right-info").eq(6).text(CWButton + ",00 €");
+        });
     });
-
-    CWneon.change(function() {
-        CWButton = this.checked ? 200 : 0;
-        calcwh.find(".right-info").eq(6).text(CWButton + " €");
-    });
-
-    CWBtnCalc.click(function() {
-        let textFieldInput = calcwh.find(".text-field__input");
-        let rightInfo = calcwh.find(".right-info");
-        for (let i = 0; i < textFieldInput.length; i++) {
-            if (textFieldInput.eq(i).val() === '') {
-                textFieldInput.eq(i).focus();
-                return;
+    
+    calcwh.find(".btn-calc").each(function() {
+        $(this).click(function() {
+            let cWInstance = $(this).closest('.calc-wholesale');
+            let textFieldInput = cWInstance.find(".text-field__input");
+            let rightInfo = cWInstance.find(".right-info");
+            for (let i = 0; i < textFieldInput.length; i++) {
+                if (textFieldInput.eq(i).val() === '') {
+                    textFieldInput.eq(i).focus();
+                    return;
+                }
             }
-        }
-        calculateCost(calcwh, CWcountry, CWButton, rightInfo, false);
+            calculateCost(cWInstance, CWcountry, CWButton, rightInfo, true);
+        });
     });
+
 
     function calculateCost(container, country, button, rightInfo, deliveryPrice) {
         let textFieldInput = container.find(".text-field__input");
-        const priceCar = Number(textFieldInput.eq(0).val()) + Number(crossBorder[country]) + Number(processingDocs[country]);
-        const priceColl = Number(collection[country]);
+        const priceCar = Number(textFieldInput.eq(0).val()) + crossBorder[country] + processingDocs[country];
+        const priceColl = collection[country];
         const priceDelivery = 450;
         const priceService = Number(textFieldInput.eq(1).val());
         const priceEurope = Number(textFieldInput.eq(2).val());
-        const priceSwift = Number(5 * (priceCar + priceColl) / 100).toFixed(2);
+        const priceSwift = (0.05 * (priceCar + priceColl)).toFixed(2);
         const priceAll = priceCar + priceColl + priceDelivery + priceService + Number(priceSwift) + 250 + 100 + button + priceEurope;
-
-        let del = 0; //НАЦIНКА НА ДОСТАВКУ
+    
+        let del = 0; // НАЦIНКА НА ДОСТАВКУ
         if (deliveryPrice) {
             if (priceAll < 6000) del = 550;
-            else if (priceAll > 6000 && priceAll < 8000) del = 960;
-            else del = 1500
+            else if (priceAll <= 8000) del = 960;
+            else del = 1500;
         }
-
-        rightInfo.eq(0).text(getFormatValue(priceCar));
-        rightInfo.eq(1).text(getFormatValue(priceDelivery + del));
-        rightInfo.eq(2).text(getFormatValue(priceEurope));
-        rightInfo.eq(4).text(getFormatValue(priceService));
-        rightInfo.eq(6).text(getFormatValue(button));
-        rightInfo.eq(7).text(getFormatValue(priceSwift));
-        rightInfo.eq(8).html(getFormatValue(priceAll + del));
+    
+        const formattedValues = [
+            priceCar,
+            priceDelivery + del,
+            priceEurope,
+            priceService,
+            button,
+            priceSwift,
+            priceAll + del
+        ].map(getFormatValue);
+    
+        [0, 1, 2, 4, 6, 7, 8].forEach((index, i) => {
+            rightInfo.eq(index).text(formattedValues[i]);
+        });
     }
-
+    
     function getFormatValue(value) {
         return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(value);
     }
+    
 });
