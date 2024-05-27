@@ -121,7 +121,7 @@ $(document).ready(function() {
         let textFieldInput = container.find(".text-field__input");
         const priceCar = Number(textFieldInput.eq(0).val()) + Number(crossBorder[country]) + Number(processingDocs[country]);
         const priceColl = Number(collection[country]);
-        const priceDelivery = 450
+        const priceDelivery = 450;
         const priceService = Number(textFieldInput.eq(1).val());
         const priceEurope = Number(textFieldInput.eq(2).val());
         const priceSwift = Number(5 * (priceCar + priceColl) / 100).toFixed(2);
@@ -140,7 +140,7 @@ $(document).ready(function() {
         rightInfo.eq(4).text(getFormatValue(priceService));
         rightInfo.eq(6).text(getFormatValue(button));
         rightInfo.eq(7).text(getFormatValue(priceSwift));
-        rightInfo.eq(8).html(getFormatValue(priceAll + del));
+        rightInfo.eq(8).html(getFormatValue(priceAll + del * 2));
     }
 
     function getFormatValue(value) {
