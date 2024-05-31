@@ -38,14 +38,14 @@ body {
 }
 
 .calc-cost {
-    margin: 1% 0% 0% 1% !important;
+    margin-top: 1%;
     display: flex;
     justify-content: space-around;
     align-items: stretch;
 }
 
 .calc-wholesale {
-    margin: 1% 0% 0% 1% !important;
+    margin-top: 1%;
     justify-content: space-around;
     align-items: stretch;
     display: none;
