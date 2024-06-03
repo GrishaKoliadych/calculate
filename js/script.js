@@ -152,7 +152,7 @@ $(document).ready(function() {
         const customsclearance = toll + excise + pdv; //Розмитнення
         //РОЗРАХУНОЙ РОЗМИТНЕННЯ КIНЕЦЬ
 
-        const priceSwift = (0.05 * (priceCar + priceColl)).toFixed(2);
+        const priceSwift = (100 + (0.035 * (priceCar + priceColl))).toFixed(2);
         const priceAll = priceCar + priceColl + priceDelivery + priceService + Number(priceSwift) + 250 + 100 + button + priceEurope + customsclearance;
     
         let del = 0; // НАЦIНКА НА ДОСТАВКУ
