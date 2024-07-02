@@ -68,14 +68,9 @@ btn_calc_CC_Price.addEventListener('click', () => {
         priceEurope_input.focus();
         return;
     }
-    const priceService_input = calc_CC.querySelector(".service-Price-CC");
-    if (priceService_input.value == '') {
-        priceService_input.focus();
-        return;
-    }
     const priceCar = Number(priceCar_input.value); //ЦIНА АВТО
     const priceEurope = Number(priceEurope_input.value); //ЦIНА ДОСТАВКИ З ЕВРОПИ
-    const priceService = Number(priceService_input.value); //ВАРТIСТЬ ПОСЛУГ З ПIДБОРУ
+    const priceService = 550; //ВАРТIСТЬ ПОСЛУГ З ПIДБОРУ
     calculate_CC(country_CC, priceCar, priceService, priceEurope);
 });
 
