@@ -189,7 +189,7 @@ a {
     margin-bottom: 25px;
 }
 
-@media screen and (max-width: 1350px) {
+@media screen and (max-width: 950) {
     .calc-cost {
         display: block;
     }
