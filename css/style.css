@@ -52,6 +52,7 @@ body {
 }
 
 .inputs, .outputs {
+    width: 45%;
     background-color: #363636;
     border-radius: 5px;
     padding: 20px;
@@ -132,7 +133,8 @@ input[type="number"]:focus {
     margin-top: 20px;
     background-color: #007FFF;
     padding: 10px 10px !important;
-    font-size: 16px;
+    white-space: nowrap;
+    font-size: 0.9em;
     border-radius: 5px;
     font-weight: 600;
     text-align: center;
@@ -193,6 +195,10 @@ a {
 }
 
 @media screen and (max-width: 950px) {
+    .inputs, .outputs {
+        width: 100%;
+    }
+    
     .calc-cost {
         display: block;
     }
