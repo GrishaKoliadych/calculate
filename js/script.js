@@ -24,11 +24,11 @@ for (let i = 0; i < tabMain.length; i++) {
             tabMain[j].classList.remove('active');
         tabMain[i].classList.add('active');
         if (i == 0) {
-            if (window.outerWidth > 1350) calc_CC.style.display = "flex";
+            if (window.outerWidth > 980) calc_CC.style.display = "flex";
             else calc_CC.style.display = "block";
             calc_WH.style.display = "none";
         } else {
-            if (window.outerWidth > 1350) calc_WH.style.display = "flex";
+            if (window.outerWidth > 980) calc_WH.style.display = "flex";
             else calc_WH.style.display = "block";
             calc_CC.style.display = "none";
         }
