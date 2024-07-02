@@ -13,6 +13,7 @@ const processingDocs = [249, 149, 269, 229, 259, 249, 229, 252, 189, 159]; //О�
 
 let country_CC = 0; //КРАIНА ОДИНОЧНИЙ
 let fuelType_CC = 0; //ТИП ПАЛИВА ОДИНОЧНИЙ
+let priceCar_CC_Buff = 0; //БУФЕР ФIНАЛЬНОI ЦIНИ ДЛЯ РОЗМИТНЕННЯ
 
 const calc_CC = document.querySelector(".calc-cost");
 const calc_WH = document.querySelector(".calc-wholesale");
@@ -105,6 +106,7 @@ function calculate_CC(country, priceCar, priceService, priceEurope) {
     labelInfoForAuto[2].innerText = getFormatValue(priceService);
     labelInfoForAuto[3].innerText = getFormatValue(priceSwift);
     labelInfoForAuto[5].innerText = getFormatValue(allPriceCar);
+    priceCar_CC_Buff = allPriceCar;
     function getFormatValue(value) {
         return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(value);
     }
@@ -178,14 +180,7 @@ btn_calc_CC_clearance.addEventListener('click', () => {
     const labelInfoForAuto = ouptuts_Main_CC.querySelectorAll(".right-info");
 
     labelInfoForAuto[4].innerText = getFormatValue(customsclearance);
-
-
-    const allPriceForReplace = labelInfoForAuto[5].innerText; //ЗАГАЛЬНА СУМА АВТО ДЛЯ ЗАМIНИ
-
-    let cleanedStr = allPriceForReplace.replace(/[^\d,]/g, '');
-    let replacesPrice = parseFloat(cleanedStr.replace(',', '.'));
-
-    labelInfoForAuto[5].innerText = getFormatValue(Number(replacesPrice) + Number(customsclearance));
+    labelInfoForAuto[5].innerText = getFormatValue(Number(priceCar_CC_Buff) + Number(customsclearance));
 
     function getFormatValue(value) {
         return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(value);
