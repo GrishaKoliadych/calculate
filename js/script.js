@@ -12,8 +12,6 @@ const processingDocs = [249, 149, 269, 229, 259, 249, 229, 252, 189, 159]; //О�
 
 
 let country_CC = 0; //КРАIНА ОДИНОЧНИЙ
-let fuelType_CC = 0; //ТИП ПАЛИВА ОДИНОЧНИЙ
-let priceCar_CC_Buff = 0; //БУФЕР ФIНАЛЬНОI ЦIНИ ДЛЯ РОЗМИТНЕННЯ
 
 const calc_CC = document.querySelector(".calc-cost");
 const calc_WH = document.querySelector(".calc-wholesale");
@@ -111,86 +109,6 @@ function calculate_CC(country, priceCar, priceService, priceEurope) {
         return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(value);
     }
 }
-
-
-
-//SELECT ТИПА ПАЛИВА ОДИНОЧНИЙ
-const select_CC_header_fuel = document.querySelector(".select-header-CC-Fuel");
-const selectBody_CC_fuel = document.querySelector(".select-body-CC-Fuel");
-const current_CC_fuel = select_CC_header_fuel.querySelector(".select-current");
-const items_CC_fuel= selectBody_CC_fuel.querySelectorAll(".select-item");
-
-select_CC_header_fuel.addEventListener('click', () => {
-    selectBody_CC_fuel.style.width = select_CC_header_fuel.offsetWidth + "px";
-    selectBody_CC_fuel.classList.toggle('is-active');
-})
-
-for (let i = 0; i < items_CC_fuel.length; i++) {
-    items_CC_fuel[i].addEventListener('click', () => {
-        current_CC_fuel.innerText = items_CC_fuel[i].innerText;
-        fuelType_CC = i;
-        selectBody_CC_fuel.classList.toggle('is-active');
-    })
-}
-
-const btn_calc_CC_clearance = calc_CC.querySelector(".btn-calc-CC-clearance");
-btn_calc_CC_clearance.addEventListener('click', () => {
-    const priceCar_input = calc_CC.querySelector(".auto-Price-CC");
-    if (priceCar_input.value == '') {
-        priceCar_input.focus();
-        return;
-    }
-    const yearRelease_label = calc_CC.querySelector(".year-Release-CC");
-    if (yearRelease_label.value == '') {
-        yearRelease_label.focus();
-        return;
-    }
-    const engineCapacity_label = calc_CC.querySelector(".engine-Capacity-CC");
-    if (engineCapacity_label.value == '') {
-        engineCapacity_label.focus();
-        return;
-    }
-
-    const pliceCarOlso = Number(priceCar_input.value);
-    const yearRelease = Number(yearRelease_label.value);
-    const engineCapacity = Number(engineCapacity_label.value);
-
-    let basikExcise = 0; //Базовий акциз
-    if (fuelType_CC == 0) {
-        if (engineCapacity <= 3000) basikExcise = 50;
-        else basikExcise = 100;
-    } else {
-        if (engineCapacity <= 3500) basikExcise = 75;
-        else basikExcise = 150;
-    }
-
-    let coeffYear = 2024 - yearRelease - 1; //Коефiцiєнт вiку
-    if (coeffYear < 1) coeffYear = 1;
-    else if (coeffYear > 15) coeffYear = 15;
-
-    const excise = basikExcise * (engineCapacity / 1000) * coeffYear; //Акциз
-    const toll = pliceCarOlso * 0.1; //Мито
-
-    const pdv = (pliceCarOlso + toll + excise) * 0.2;
-
-    const customsclearance = toll + excise + pdv; //Розмитнення
-    //РОЗРАХУНОЙ РОЗМИТНЕННЯ КIНЕЦЬ
-
-    const ouptuts_Main_CC = calc_CC.querySelector(".outputs");
-    const labelInfoForAuto = ouptuts_Main_CC.querySelectorAll(".right-info");
-
-    labelInfoForAuto[4].innerText = getFormatValue(customsclearance);
-    labelInfoForAuto[5].innerText = getFormatValue(Number(priceCar_CC_Buff) + Number(customsclearance));
-
-    function getFormatValue(value) {
-        return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(value);
-    }
-});
-
-
-
-
-
 
 
 
