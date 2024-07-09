@@ -796,11 +796,10 @@ btn_calc_America.addEventListener('click', () => {
     labelInfoForAuto[0].innerText = getFormatValue(Number(auctionFee) + Number(carPrice));
     labelInfoForAuto[1].innerText = getFormatValue(Number(broker));
     labelInfoForAuto[2].innerText = getFormatValue(Number(service));
-    labelInfoForAuto[3].innerText = getFormatValue(Number(contPrice));
-    labelInfoForAuto[4].innerText = getFormatValue(Number(deliveryPort));
-    labelInfoForAuto[5].innerText = getFormatValue(Number(priceSwift));
-    labelInfoForAuto[6].innerText = getFormatValue(Number(clearance));
-    labelInfoForAuto[7].innerText = getFormatValue(Number(allPrice));
+    labelInfoForAuto[3].innerText = getFormatValue(Number(deliveryPort));
+    labelInfoForAuto[4].innerText = getFormatValue(Number(priceSwift));
+    labelInfoForAuto[5].innerText = getFormatValue(Number(clearance));
+    labelInfoForAuto[6].innerText = getFormatValue(Number(allPrice));
 
     function getFormatValue(value) {
         return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
