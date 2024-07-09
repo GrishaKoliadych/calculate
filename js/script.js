@@ -754,7 +754,7 @@ btn_calc_America.addEventListener('click', () => {
         yearReleaseAmerica_label.focus();
         return;
     }
-    
+
     //Вигрузка литва + погрузка на автовоз + Литва - Львiв + Брокер + Послуги + Цiна контейнеру + Доставка до потру + 200 + Мито + аук збiр
 
     let carPrice = Number(autoPriceAmerica_label.value); //Цiна авто
@@ -770,7 +770,7 @@ btn_calc_America.addEventListener('click', () => {
     const deliveryPort = statesInfo[america_state].price; //Доставка в порт
     const clearance = getClearance(carPrice, yearRelease, engineCapacity, america_fuel); //Мито
 
-    const allPrice = unloadLithuania + loadCarTransported + lithuaniaLviv + broker + service + contPrice + deliveryPort + 200 + clearance + auctionFee;
+    const allPrice = unloadLithuania + loadCarTransported + lithuaniaLviv + broker + service + contPrice + deliveryPort + 200 + clearance + auctionFee + 100;
 
     
 
