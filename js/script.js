@@ -754,30 +754,23 @@ btn_calc_America.addEventListener('click', () => {
         yearReleaseAmerica_label.focus();
         return;
     }
-    const auctionAmerica_label = calc_america.querySelector(".auction-America");
-    if (auctionAmerica_label.value == '') {
-        auctionAmerica_label.focus();
-        return;
-    }
-
+    
     //Вигрузка литва + погрузка на автовоз + Литва - Львiв + Брокер + Послуги + Цiна контейнеру + Доставка до потру + 200 + Мито + аук збiр
 
     let carPrice = Number(autoPriceAmerica_label.value); //Цiна авто
     let yearRelease = Number(yearReleaseAmerica_label.value); //Рiк випуску авто
     let engineCapacity = Number(engineCapacityAmerica_label.value); //Обьем двигуна
-    let auction = Number(auctionAmerica_label.value); //Аукцiон
-
     const unloadLithuania = 400; //Вигрузка литва
     const loadCarTransported = 35; //Погрузка на автовоз
     const lithuaniaLviv = 1100; //Литва - Львiв
     const broker = 250; //Брокер
     const service = 550; // Послуги
     const auctionFee = getAuctionAmerica(carPrice); //Аук збiр
-    const contPrice = getContainerPrice(statesInfo[america_state].port); //Цiна контейнеру
+    const contPrice = getContainerPrice(statesInfo[america_state].port) + 100; //Цiна контейнеру
     const deliveryPort = statesInfo[america_state].price; //Доставка в порт
     const clearance = getClearance(carPrice, yearRelease, engineCapacity, america_fuel); //Мито
 
-    const allPrice = unloadLithuania + loadCarTransported + lithuaniaLviv + broker + service + contPrice + deliveryPort + 200 + clearance + auctionFee + auction;
+    const allPrice = unloadLithuania + loadCarTransported + lithuaniaLviv + broker + service + contPrice + deliveryPort + 200 + clearance + auctionFee;
 
     
 
@@ -793,7 +786,7 @@ btn_calc_America.addEventListener('click', () => {
     labelInfoForAuto[6].innerText = getFormatValue(Number(allPrice));
 
     function getFormatValue(value) {
-        return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(value);
+        return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
     }
 });
 
