@@ -14,6 +14,7 @@ const processingDocs = [249, 149, 269, 229, 259, 249, 229, 252, 189, 159]; //О�
 let country_CC = 0; //КРАIНА ОДИНОЧНИЙ
 let fuelType_CC = 0; //ТИП ПАЛИВА ОДИНОЧНИЙ
 let priceCar_CC_Buff = 0; //БУФЕР ФIНАЛЬНОI ЦIНИ ДЛЯ РОЗМИТНЕННЯ
+let buttonCC = 0; //КНОПКА ОДИНОЧНИЙ
 
 const calc_CC = document.querySelector(".calc-cost");
 const calc_WH = document.querySelector(".calc-wholesale");
@@ -65,6 +66,11 @@ for (let i = 0; i < items_CC_country.length; i++) {
     })
 }
 
+calc_CC.querySelector(".neon").addEventListener('change', () => {
+    buttonCC = calc_CC.querySelector(".neon").checked ? 250 : 0;
+    console.log("s");
+});
+
 //КНОПКА РОЗРАХУНКУ ЦIНИ ОДИНОЧНИЙ
 const btn_calc_CC_Price = calc_CC.querySelector(".btn-calc-CC-all-price");
 btn_calc_CC_Price.addEventListener('click', () => {
@@ -99,7 +105,7 @@ function calculate_CC(country, priceCar, priceService, priceEurope) {
     if (allPriceNoUK > 4000 && allPriceNoUK < 6000) priceUK = 1450;
     if (allPriceNoUK > 6000) priceUK = 1800;
 
-    const allPriceCar = allPriceNoUK + priceUK; //ВАРТIСТЬ АВТО З ДОСТАВКОЮ ДО УКРАIНИ
+    const allPriceCar = allPriceNoUK + priceUK + buttonCC; //ВАРТIСТЬ АВТО З ДОСТАВКОЮ ДО УКРАIНИ
 
     const ouptuts_Main_CC = calc_CC.querySelector(".outputs");
     const labelInfoForAuto = ouptuts_Main_CC.querySelectorAll(".right-info");
@@ -154,7 +160,7 @@ btn_calc_CC_clearance.addEventListener('click', () => {
         return;
     }
 
-    const pliceCarOlso = Number(priceCar_input.value);
+    const pliceCarOlso = Number(priceCar_input.value) + 300;
     const yearRelease = Number(yearRelease_label.value);
     const engineCapacity = Number(engineCapacity_label.value);
 
