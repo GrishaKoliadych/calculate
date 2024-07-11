@@ -380,7 +380,7 @@ const statesInfo = [
     {state: "BILLINGS - MT", price: 920, port: 6},
     {state: "BIRMINGHAM - AL", price: 475, port: 2},
     {state: "BISMARCK - ND", price: 1170, port: 5},
-    {state: "BOISE-ID", price: 820, port: 5},
+    {state: "BOISE-ID", price: 570, port: 6},
     {state: "BOSTON - SHIRLEY - MA", price: 445, port: 1},
     {state: "Bowling Green - KY", price: 460, port: 6},
     {state: "BRIDGEPORT (PA)", price: 345, port: 1},
