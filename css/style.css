@@ -157,10 +157,14 @@ input[type="number"]:focus {
     display: block !important;
 }
 
+.inputs-flex {
+    display: flex !important;
+    align-items: top;
+    justify-content: center;
+}
+
 .inputs-item-flex {
     width: 45%;
-    display: inline-block;
-    /* margin: 0% 2%; */
 }
 
 .inputs-item-flex:first-child {
@@ -246,6 +250,10 @@ a {
     syntax: '<color>';
     inherits: true;
     initial-value: #0000;
+}
+
+.fix-neon {
+    margin-left: 10px;
 }
   
 .neon {
