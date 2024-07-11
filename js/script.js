@@ -766,7 +766,6 @@ btn_calc_America.addEventListener('click', () => {
     let engineCapacity = Number(engineCapacityAmerica_label.value); //Обьем двигуна
 
     const unloadPort = 400; //Вигрузка з порту
-    const deliverySea = 800; //Доставка морем
     const deliveryUK = 1100; //Доставка до укр.
     const button = 135; //Кнопка
     const broker = 250; //Брокер
@@ -774,7 +773,7 @@ btn_calc_America.addEventListener('click', () => {
     const auctionFee = getAuctionAmerica(carPrice); //Аук збiр
     const contPrice = getContainerPrice(statesInfo[america_state].port); //Цiна контейнеру
     const loadAuto = 35;
-    const LithuaniaLviv = 1100 + 800;
+    const LithuaniaLviv = 1100 + 800 //Доставка морем;
 
     const priceSwift = (100 + (0.032 * (carPrice + auctionFee))); //СВIФТ
     const deliveryPort = statesInfo[america_state].price + 150; //Доставка в порт
@@ -783,7 +782,9 @@ btn_calc_America.addEventListener('click', () => {
     console.log("Ціна авто: " + carPrice);
     console.log("Аук. збір: " + auctionFee);
     console.log("Доставка в порт: " + deliveryPort);
-    console.log("Доставка морем: " + deliverySea);
+    console.log("Цiна контейнеру: " + contPrice);
+    console.log("Погрузка на автовоз: " + loadAuto);
+    console.log("Доставка морем: " + LithuaniaLviv);
     console.log("Вигрузка з порту: " + unloadPort);
     console.log("Доставка до ук: " + deliveryUK);
     console.log("Брокер: " + broker);
@@ -792,7 +793,7 @@ btn_calc_America.addEventListener('click', () => {
     console.log("Мито: " + clearance);
     console.log("Свіфт: " + priceSwift);
 
-    const allPrice = carPrice + auctionFee + deliveryPort + deliverySea + unloadPort + deliveryUK + broker + service + button + clearance + priceSwift + contPrice + loadAuto + LithuaniaLviv;
+    const allPrice = carPrice + auctionFee + deliveryPort + LithuaniaLviv + unloadPort + deliveryUK + broker + service + button + clearance + priceSwift + contPrice + loadAuto;
 
     const ouptuts_Main_America = calc_america.querySelector(".outputs");
     const labelInfoForAuto = ouptuts_Main_America.querySelectorAll(".right-info");
