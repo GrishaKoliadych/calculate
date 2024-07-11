@@ -775,7 +775,7 @@ btn_calc_America.addEventListener('click', () => {
 
     const priceSwift = (100 + (0.032 * (carPrice + auctionFee))); //СВIФТ
     const deliveryPort = statesInfo[america_state].price + 150; //Доставка в порт
-    const clearance = getClearance(carPrice, yearRelease, engineCapacity, america_fuel); //Мито
+    const clearance = getClearance(carPrice, auctionFee, yearRelease, engineCapacity, america_fuel); //Мито
 
     console.log("Ціна авто: " + carPrice);
     console.log("Аук. збір: " + auctionFee);
@@ -809,25 +809,27 @@ btn_calc_America.addEventListener('click', () => {
 });
 
 
-function getClearance(carPrice, yearRelease, engineCapacity, fuelType) {
-    let basikExcise = 0; //Базовий акциз
-    if (fuelType == 0) {
-        if (engineCapacity <= 3000) basikExcise = 50;
-        else basikExcise = 100;
-    } else {
-        if (engineCapacity <= 3500) basikExcise = 75;
-        else basikExcise = 150;
-    }
+function getClearance(carPrice, auctionFee, yearRelease, engineCapacity, fuelType) {
+    
+    // let basikExcise = 0; //Базовий акциз
+    // if (fuelType == 0) {
+    //     if (engineCapacity <= 3000) basikExcise = 50;
+    //     else basikExcise = 100;
+    // } else {
+    //     if (engineCapacity <= 3500) basikExcise = 75;
+    //     else basikExcise = 150;
+    // }
 
-    let coeffYear = 2024 - yearRelease - 1; //Коефiцiєнт вiку
-    if (coeffYear < 1) coeffYear = 1;
-    else if (coeffYear > 15) coeffYear = 15;
+    // let coeffYear = 2024 - yearRelease - 1; //Коефiцiєнт вiку
+    // if (coeffYear < 1) coeffYear = 1;
+    // else if (coeffYear > 15) coeffYear = 15;
 
-    const excise = basikExcise * (engineCapacity / 1000) * coeffYear; //Акциз
-    const toll = carPrice * 0.1; //Мито
-    const pdv = (carPrice + toll + excise) * 0.2;
+    // const excise = basikExcise * (engineCapacity / 1000) * coeffYear; //Акциз
+    // const toll = carPrice * 0.1; //Мито
+    // const pdv = (carPrice + toll + excise) * 0.2;
 
-    return toll + excise + pdv; //Розмитнення
+    // return toll + excise + pdv; //Розмитнення
+    return carPrice + auctionFee + 1600;
 }
 
 function getContainerPrice(sity) {
