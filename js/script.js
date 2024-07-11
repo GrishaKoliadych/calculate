@@ -756,10 +756,9 @@ btn_calc_America.addEventListener('click', () => {
     }
 
     //Вартість авто + аук збiр + доставка до порту (+150) + 
-    //доставка по морю (+800) + Вигрузка з порту (+400) + 
+    //Погрузка на автовоз (35) + доставка по морю (+800) + Вигрузка з порту (400) + 
     //доставка до України (1100) + брокерські послуги (250) + 
     //Вартість послуг (550) + Кнопка (135) + Розмитнення + Свiфт+
-    //Погрузка на автовоз (35) + Литва - Львiв
 
     let carPrice = Number(autoPriceAmerica_label.value); //Цiна авто
     let yearRelease = Number(yearReleaseAmerica_label.value); //Рiк випуску авто
@@ -771,9 +770,8 @@ btn_calc_America.addEventListener('click', () => {
     const broker = 250; //Брокер
     const service = 550; // Послуги
     const auctionFee = getAuctionAmerica(carPrice); //Аук збiр
-    const contPrice = getContainerPrice(statesInfo[america_state].port); //Цiна контейнеру
-    const loadAuto = 35;
-    const LithuaniaLviv = 1100 + 800 //Доставка морем;
+    const deliveryMoore = getContainerPrice(statesInfo[america_state].port) + 800; //Доставка морем
+    const loadAuto = 35; //Погрузка на автовоз
 
     const priceSwift = (100 + (0.032 * (carPrice + auctionFee))); //СВIФТ
     const deliveryPort = statesInfo[america_state].price + 150; //Доставка в порт
@@ -782,9 +780,8 @@ btn_calc_America.addEventListener('click', () => {
     console.log("Ціна авто: " + carPrice);
     console.log("Аук. збір: " + auctionFee);
     console.log("Доставка в порт: " + deliveryPort);
-    console.log("Цiна контейнеру: " + contPrice);
     console.log("Погрузка на автовоз: " + loadAuto);
-    console.log("Доставка морем: " + LithuaniaLviv);
+    console.log("Доставка морем: " + deliveryMoore);
     console.log("Вигрузка з порту: " + unloadPort);
     console.log("Доставка до ук: " + deliveryUK);
     console.log("Брокер: " + broker);
@@ -793,7 +790,7 @@ btn_calc_America.addEventListener('click', () => {
     console.log("Мито: " + clearance);
     console.log("Свіфт: " + priceSwift);
 
-    const allPrice = carPrice + auctionFee + deliveryPort + LithuaniaLviv + unloadPort + deliveryUK + broker + service + button + clearance + priceSwift + contPrice + loadAuto;
+    const allPrice = carPrice + auctionFee + deliveryPort + loadAuto + deliveryMoore + unloadPort + deliveryUK + broker + service + button + clearance + priceSwift;
 
     const ouptuts_Main_America = calc_america.querySelector(".outputs");
     const labelInfoForAuto = ouptuts_Main_America.querySelectorAll(".right-info");
