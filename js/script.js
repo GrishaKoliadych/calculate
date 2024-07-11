@@ -770,7 +770,7 @@ btn_calc_America.addEventListener('click', () => {
     const broker = 250; //Брокер
     const service = 550; // Послуги
     const auctionFee = getAuctionAmerica(carPrice); //Аук збiр
-    const deliveryMoore = getContainerPrice(statesInfo[america_state].port) + 800; //Доставка морем
+    const deliverySea = getContainerPrice(statesInfo[america_state].port) + 800; //Доставка морем
     const loadAuto = 35; //Погрузка на автовоз
 
     const priceSwift = (100 + (0.032 * (carPrice + auctionFee))); //СВIФТ
@@ -781,7 +781,7 @@ btn_calc_America.addEventListener('click', () => {
     console.log("Аук. збір: " + auctionFee);
     console.log("Доставка в порт: " + deliveryPort);
     console.log("Погрузка на автовоз: " + loadAuto);
-    console.log("Доставка морем: " + deliveryMoore);
+    console.log("Доставка морем: " + deliverySea);
     console.log("Вигрузка з порту: " + unloadPort);
     console.log("Доставка до ук: " + deliveryUK);
     console.log("Брокер: " + broker);
@@ -790,7 +790,7 @@ btn_calc_America.addEventListener('click', () => {
     console.log("Мито: " + clearance);
     console.log("Свіфт: " + priceSwift);
 
-    const allPrice = carPrice + auctionFee + deliveryPort + loadAuto + deliveryMoore + unloadPort + deliveryUK + broker + service + button + clearance + priceSwift + 700;
+    const allPrice = carPrice + auctionFee + deliveryPort + loadAuto + deliverySea + unloadPort + deliveryUK + broker + service + button + clearance + priceSwift + 700;
 
     const ouptuts_Main_America = calc_america.querySelector(".outputs");
     const labelInfoForAuto = ouptuts_Main_America.querySelectorAll(".right-info");
@@ -799,9 +799,10 @@ btn_calc_America.addEventListener('click', () => {
     labelInfoForAuto[1].innerText = getFormatValue(Number(broker));
     labelInfoForAuto[2].innerText = getFormatValue(Number(service));
     labelInfoForAuto[3].innerText = getFormatValue(Number(deliveryPort));
-    labelInfoForAuto[4].innerText = getFormatValue(Number(priceSwift));
-    labelInfoForAuto[5].innerText = getFormatValue(Number(clearance));
-    labelInfoForAuto[6].innerText = getFormatValue(Number(allPrice));
+    labelInfoForAuto[4].innerText = getFormatValue(Number(deliverySea));
+    labelInfoForAuto[5].innerText = getFormatValue(Number(priceSwift));
+    labelInfoForAuto[6].innerText = getFormatValue(Number(clearance));
+    labelInfoForAuto[7].innerText = getFormatValue(Number(allPrice));
 
     function getFormatValue(value) {
         return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
