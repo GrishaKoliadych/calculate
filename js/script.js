@@ -98,14 +98,14 @@ function calculate_CC(country, priceCar, priceService, priceEurope) {
     const priceColl = collection[country];
     const priceSwift = (100 + (0.032 * (priceCarAuction + priceColl))); //СВIФТ
 
-    const allPriceNoUK = priceCarAuction + priceEurope + broker + certificate + priceService + priceSwift;
+    const allPriceNoUK = priceCarAuction + priceEurope + broker + certificate + priceService + priceSwift + buttonCC;
 
     let priceUK = 0; //ДОСТАВКА ДО УКРАIНИ
     if (allPriceNoUK < 4000) priceUK = 1100;
     if (allPriceNoUK > 4000 && allPriceNoUK < 6000) priceUK = 1450;
     if (allPriceNoUK > 6000) priceUK = 1800;
 
-    const allPriceCar = allPriceNoUK + priceUK + buttonCC; //ВАРТIСТЬ АВТО З ДОСТАВКОЮ ДО УКРАIНИ
+    const allPriceCar = allPriceNoUK + priceUK; //ВАРТIСТЬ АВТО З ДОСТАВКОЮ ДО УКРАIНИ
 
     const ouptuts_Main_CC = calc_CC.querySelector(".outputs");
     const labelInfoForAuto = ouptuts_Main_CC.querySelectorAll(".right-info");
