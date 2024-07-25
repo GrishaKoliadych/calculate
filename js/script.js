@@ -796,7 +796,7 @@ btn_calc_America.addEventListener('click', () => {
     console.log("Мито: " + clearance);
     console.log("Свіфт: " + priceSwift);
 
-    const allPrice = carPrice + auctionFee + deliveryPort + loadAuto + deliverySea + unloadPort + deliveryUK + broker + service + button + clearance + priceSwift + 200;
+    const allPrice = carPrice + auctionFee + deliveryPort + loadAuto + deliverySea + unloadPort + deliveryUK + broker + service + button + clearance + priceSwift + 200 + 250;
 
     const ouptuts_Main_America = calc_america.querySelector(".outputs");
     const labelInfoForAuto = ouptuts_Main_America.querySelectorAll(".right-info");
