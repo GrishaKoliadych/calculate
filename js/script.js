@@ -159,8 +159,14 @@ btn_calc_CC_clearance.addEventListener('click', () => {
         engineCapacity_label.focus();
         return;
     }
+    const priceEurope_input = calc_CC.querySelector(".europe-Price-CC");
+    if (priceEurope_input.value == '') {
+        priceEurope_input.focus();
+        return;
+    }
+    const priceEurope = Number(priceEurope_input.value); //ЦIНА ДОСТАВКИ З ЕВРОПИ
 
-    const pliceCarOlso = Number(priceCar_input.value) + 300;
+    const pliceCarOlso = Number(priceCar_input.value) + 300 + priceEurope;
     const yearRelease = Number(yearRelease_label.value);
     const engineCapacity = Number(engineCapacity_label.value);
 
