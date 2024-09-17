@@ -115,7 +115,7 @@ function calculate_CC(country, priceCar, priceService, priceEurope) {
     labelInfoForAuto[2].innerText = getFormatValue(priceService);
     labelInfoForAuto[3].innerText = getFormatValue(priceSwift);
     labelInfoForAuto[5].innerText = getFormatValue(allPriceCar);
-    priceCar_CC_Buff = allPriceCar;
+    priceCar_CC_Buff = allPriceCar + 100;
     function getFormatValue(value) {
         return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(value);
     }
@@ -802,7 +802,7 @@ btn_calc_America.addEventListener('click', () => {
     console.log("Мито: " + clearance);
     console.log("Свіфт: " + priceSwift);
 
-    const allPrice = carPrice + auctionFee + deliveryPort + loadAuto + deliverySea + unloadPort + deliveryUK + broker + service + button + clearance + priceSwift + 200 + 250;
+    const allPrice = carPrice + auctionFee + deliveryPort + loadAuto + deliverySea + unloadPort + deliveryUK + broker + service + button + clearance + priceSwift + 200 + 250 + 100;
 
     const ouptuts_Main_America = calc_america.querySelector(".outputs");
     const labelInfoForAuto = ouptuts_Main_America.querySelectorAll(".right-info");
