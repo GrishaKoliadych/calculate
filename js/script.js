@@ -215,7 +215,7 @@ $(document).ready(function() {
     let calcwh = $(".calc-wholesale");
 
     //ОПТОВИЙ КАЛЬКУЛЯТОР
-    calcwh.find(".select-header").each(function() {
+    calcwh.find(".select-header-wholesale").each(function() {
         let sbody = $(this).next(".select-body");
         let current = $(this).find(".select-current");
         let items = sbody.find('.select-item');
@@ -917,3 +917,102 @@ function getAuctionAmerica(carPrise) {
 
     return auctionFee[0] + auctionFee[1] + 10 + 50 + 69;
 }
+
+
+function lastUpdate() {
+    let selectInfo = [
+        ["USD", "UAH", "EUR"],
+        ["USD", "UAH", "EUR"],
+        ["USD", "UAH", "EUR"]
+    ];
+
+    function selectCurrcency() {
+        //SELECT ОБМІНУ ВАЛЮТ
+        const currencyExchangeWrapper = document.querySelectorAll('.currencyExchange-wrapper');
+        for (let i = 0; i < currencyExchangeWrapper.length; i++) {
+            const currencyItem = currencyExchangeWrapper[i].querySelectorAll(".currency-item");
+            for (let j = 0; j < currencyItem.length; j++) {
+
+                const select_header_currency = currencyItem[j].querySelector(".select-header-currency");
+                const selectBody_currency = currencyItem[j].querySelector(".select-body-currency");
+                const current_currency = select_header_currency.querySelector(".select-current");
+                const items_currency = selectBody_currency.querySelectorAll(".select-item");
+
+                select_header_currency.addEventListener('click', () => {
+                    selectBody_currency.style.width = select_header_currency.offsetWidth + "px";
+                    selectBody_currency.classList.toggle('is-active');
+                })
+
+                for (let k = 0; k < items_currency.length; k++) {
+                    items_currency[k].addEventListener('click', () => {
+                        current_currency.innerText = items_currency[k].innerText;
+                        selectInfo[i][j] = items_currency[k].innerText;
+                        selectBody_currency.classList.toggle('is-active');
+                        setCourse(i);
+                    })
+                }
+            }
+
+            const btnExchangeCurrency = currencyExchangeWrapper[i].querySelector(".btn-exchange-currency");
+            btnExchangeCurrency.addEventListener('click', async () => {
+                const currItem = currencyExchangeWrapper[i].querySelectorAll('.currency-item input');
+                if (currItem) {
+                    const col = Number(currItem[0].value);
+                    if (col == NaN || col == undefined || col === 0) {
+                        currItem[0].focus();
+                    } else {
+                        const info = await getExchangeRates();
+                        if (info) {
+                            info['UAH'] = 1;
+                            const value = (col * Number(info[selectInfo[i][0]])) / info[selectInfo[i][1]];
+                            currItem[1].value = value.toFixed(2);
+                        }
+                    }
+                }
+            })
+        }
+    }
+    selectCurrcency();
+
+    async function getExchangeRates() {
+        let info = {};
+        const url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json';
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Помилка: ${response.status}`);
+            }
+            const data = await response.json();
+            const currencies = ['USD', 'EUR'];
+            const rates = data.filter(item => currencies.includes(item.cc));
+            
+            rates.forEach(rate => {
+                info[rate.cc] = rate.rate;
+            });
+            return info;
+        } catch (error) {
+            console.error('Помилка при отриманні даних:', error);
+        }
+    }
+
+    async function setCourse(str) {
+        const currencyExchangeWrapper = document.querySelectorAll('.currencyExchange-wrapper');
+        const infoLabel = currencyExchangeWrapper[str].querySelector('.info-label');
+        try {
+            const info = await getExchangeRates();
+            if (info) {
+                info['UAH'] = 1;
+                const value = info[selectInfo[str][0]] / info[selectInfo[str][1]];
+                infoLabel.innerText = `1 ${selectInfo[str][0]} = ${value.toFixed(2)} ${selectInfo[str][1]}`;
+            }
+        } catch (error) {
+            console.error('Помилка при встановлені курсу:', error);
+        }
+    }
+
+    setCourse(0);
+    setCourse(1);
+    setCourse(2);
+}
+
+lastUpdate();
