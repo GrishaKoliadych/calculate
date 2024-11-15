@@ -481,6 +481,10 @@ a {
     margin: 10px 0px;
 }
 
+.currencyExchange-wrapper .currency-item:first-child {
+    margin-top: 0px;
+}
+
 .currencyExchange-wrapper .currency-item label {
     font-size: 16px;
     margin-bottom: -5px;
@@ -489,7 +493,7 @@ a {
 .currencyExchange-wrapper .currency-item .select-header, .currencyExchange-wrapper .currency-item input {
     width: 100px !important;
     margin-bottom: 5px !important;
-    height: 42px !important;
+    height: 30px !important;
 }
 
 .currencyExchange-wrapper .currency-item .select-body {
@@ -521,6 +525,11 @@ a {
 }
 
 
+.currencyExchange-wrapper .info-btn-wrapper .info-label {
+    width: 100%;
+    text-align: center !important;
+}
+
 .currencyExchange-wrapper .currency-item input, .currencyExchange-wrapper .currency-item .select-header {
     border: none;
     border-bottom: 1px solid #5a5a5a;
@@ -529,4 +538,12 @@ a {
 
 .currencyExchange-wrapper .currency-item input {
     padding-left: 5px;
+}
+
+.currencyExchange-wrapper .select-current {
+    padding: 2px !important;
+}
+
+.currencyExchange-wrapper .select-item {
+    padding: 4px;
 }
