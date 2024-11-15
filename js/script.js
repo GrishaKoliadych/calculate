@@ -980,9 +980,9 @@ function lastUpdate() {
                 } else {
                     let value = 0;
                     if (selectInfo[i][0] === "EUR" && selectInfo[i][1] === "USD")
-                        value = col * eurToUSD;
+                        value = col / eurToUSD;
                     else if (selectInfo[i][0] === "USD" && selectInfo[i][1] === "EUR")
-                        value = col * usdToEUR;
+                        value = col / usdToEUR;
                     else
                         value = (col * Number(course[selectInfo[i][0]])) / course[selectInfo[i][1]];
                     currItem[1].value = value.toFixed(3);
