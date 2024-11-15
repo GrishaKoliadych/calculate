@@ -931,104 +931,220 @@ function getAuctionAmerica(carPrise) {
 
 
 
+// function lastUpdate() {
+//     let selectInfo = [
+//         ["EUR", "UAH", "USD"],
+//         ["USD", "UAH", "EUR"],
+//         ["USD", "UAH", "EUR"]
+//     ];
+
+//     let course = [];
+//     course['USD'] = 41.65;
+//     course['EUR'] = 44.2;
+//     course['UAH'] = 1;
+//     let usdToEUR = 0;
+//     let eurToUSD = 0;
+
+//     function selectCurrcency() {
+//         //SELECT ОБМІНУ ВАЛЮТ
+//         const currencyExchangeWrapper = document.querySelectorAll('.currencyExchange-wrapper');
+//         for (let i = 0; i < currencyExchangeWrapper.length; i++) {
+//             const currencyItem = currencyExchangeWrapper[i].querySelectorAll(".currency-item");
+//             for (let j = 0; j < currencyItem.length; j++) {
+
+//                 const select_header_currency = currencyItem[j].querySelector(".select-header-currency");
+//                 const selectBody_currency = currencyItem[j].querySelector(".select-body-currency");
+//                 const current_currency = select_header_currency.querySelector(".select-current");
+//                 const items_currency = selectBody_currency.querySelectorAll(".select-item");
+
+//                 select_header_currency.addEventListener('click', () => {
+//                     selectBody_currency.style.width = select_header_currency.offsetWidth + "px";
+//                     selectBody_currency.classList.toggle('is-active');
+//                 })
+
+//                 for (let k = 0; k < items_currency.length; k++) {
+//                     items_currency[k].addEventListener('click', () => {
+//                         current_currency.innerText = items_currency[k].innerText;
+//                         selectInfo[i][j] = items_currency[k].innerText;
+//                         selectBody_currency.classList.toggle('is-active');
+//                         setCourse(i);
+//                     })
+//                 }
+//             }
+
+//             const currItem = currencyExchangeWrapper[i].querySelectorAll('.currency-item input');
+//             currItem[0].addEventListener('input', () => {
+//                 const col = Number(currItem[0].value);
+//                 if (col == NaN || col == undefined) {
+//                     currItem[0].focus();
+//                 } else {
+//                     let value = 0;
+//                     if (selectInfo[i][0] === "EUR" && selectInfo[i][1] === "USD")
+//                         value = col * eurToUSD;
+//                     else if (selectInfo[i][0] === "USD" && selectInfo[i][1] === "EUR")
+//                         value = col * usdToEUR;
+//                     else
+//                         value = (col * Number(course[selectInfo[i][0]])) / course[selectInfo[i][1]];
+//                     currItem[1].value = value.toFixed(3);
+//                 }
+//             })
+
+//             const currCross = currencyExchangeWrapper[i].querySelectorAll('.currency-cross input');
+//             for (let j = 0; j < currCross.length; j++) {
+//                 currCross[j].addEventListener('input', () => {
+//                     if (currCross[j].value !== NaN && currCross[j].value !== undefined) {
+//                         console.log(currCross[j].value);
+//                         if (j === 0) {
+//                             eurToUSD = Number(currCross[j].value);
+//                         } else if (j === 1) {
+//                             usdToEUR = Number(currCross[j].value);
+//                         }
+//                         setExchangeValue(i, currItem[0].value);
+//                         setCourse(0);
+//                         setCourse(1);
+//                         setCourse(2);
+//                     }
+//                 })
+//             }
+
+//         }
+//     }
+//     selectCurrcency();
+
+
+//     function setCourse(str) {
+//         const currencyExchangeWrapper = document.querySelectorAll('.currencyExchange-wrapper');
+//         const infoLabel = currencyExchangeWrapper[str].querySelector('.info-label');
+//         let value = course[selectInfo[str][0]] / course[selectInfo[str][1]];
+//         if (selectInfo[str][0] === "EUR" && selectInfo[str][1] === "USD")
+//             value = eurToUSD;
+//         else if (selectInfo[str][0] === "USD" && selectInfo[str][1] === "EUR")
+//             value = usdToEUR;
+//         infoLabel.innerText = `1 ${selectInfo[str][0]} = ${value.toFixed(3)} ${selectInfo[str][1]}`;
+        
+//         const inputEvent = new Event('input', {
+//             bubbles: true,
+//             cancelable: true
+//         });
+//         const currItem = currencyExchangeWrapper[str].querySelectorAll('.currency-item input');
+//         currItem[0].dispatchEvent(inputEvent);
+//     }
+
+//     setCourse(0);
+//     setCourse(1);
+//     setCourse(2);
+// }
+
+// function setExchangeValue(str, value) {
+//     const currencyExchangeWrapper = document.querySelectorAll('.currencyExchange-wrapper');
+//     const currItem = currencyExchangeWrapper[str].querySelectorAll('.currency-item input');
+//     if (currItem) {
+//         currItem[0].value = value;
+//         const inputEvent = new Event('input', {
+//             bubbles: true,
+//             cancelable: true
+//         });
+//         currItem[0].dispatchEvent(inputEvent);
+//     }
+// }
+
+// lastUpdate();
+
 function lastUpdate() {
-    let selectInfo = [
+    const selectInfo = [
         ["EUR", "UAH", "USD"],
         ["USD", "UAH", "EUR"],
         ["USD", "UAH", "EUR"]
     ];
 
-    let course = [];
-    course['USD'] = 41.65;
-    course['EUR'] = 44.2;
-    course['UAH'] = 1;
-    let usdToEUR = 1.062;
-    let eurToUSD = 1.054;
+    const course = {
+        USD: 41.65,
+        EUR: 44.2,
+        UAH: 1
+    };
 
-    function selectCurrcency() {
-        //SELECT ОБМІНУ ВАЛЮТ
-        const currencyExchangeWrapper = document.querySelectorAll('.currencyExchange-wrapper');
-        for (let i = 0; i < currencyExchangeWrapper.length; i++) {
-            const currencyItem = currencyExchangeWrapper[i].querySelectorAll(".currency-item");
-            for (let j = 0; j < currencyItem.length; j++) {
+    let usdToEUR = 0;
+    let eurToUSD = 0;
 
-                const select_header_currency = currencyItem[j].querySelector(".select-header-currency");
-                const selectBody_currency = currencyItem[j].querySelector(".select-body-currency");
-                const current_currency = select_header_currency.querySelector(".select-current");
-                const items_currency = selectBody_currency.querySelectorAll(".select-item");
+    function selectCurrency() {
+        const currencyExchangeWrappers = document.querySelectorAll('.currencyExchange-wrapper');
 
-                select_header_currency.addEventListener('click', () => {
-                    selectBody_currency.style.width = select_header_currency.offsetWidth + "px";
-                    selectBody_currency.classList.toggle('is-active');
-                })
+        currencyExchangeWrappers.forEach((wrapper, i) => {
+            const currencyItems = wrapper.querySelectorAll('.currency-item');
+            const inputs = wrapper.querySelectorAll('.currency-item input');
+            const crossInputs = wrapper.querySelectorAll('.currency-cross input');
+            const infoLabel = wrapper.querySelector('.info-label');
 
-                for (let k = 0; k < items_currency.length; k++) {
-                    items_currency[k].addEventListener('click', () => {
-                        current_currency.innerText = items_currency[k].innerText;
-                        selectInfo[i][j] = items_currency[k].innerText;
-                        selectBody_currency.classList.toggle('is-active');
-                        setCourse(i);
-                    })
-                }
-            }
+            currencyItems.forEach((item, j) => {
+                const header = item.querySelector('.select-header-currency');
+                const body = item.querySelector('.select-body-currency');
+                const currentCurrency = header.querySelector('.select-current');
+                const items = body.querySelectorAll('.select-item');
 
-            const currItem = currencyExchangeWrapper[i].querySelectorAll('.currency-item input');
-            currItem[0].addEventListener('input', () => {
-                const col = Number(currItem[0].value);
-                if (col == NaN || col == undefined) {
-                    currItem[0].focus();
-                } else {
-                    let value = 0;
-                    if (selectInfo[i][0] === "EUR" && selectInfo[i][1] === "USD")
-                        value = col * eurToUSD;
-                    else if (selectInfo[i][0] === "USD" && selectInfo[i][1] === "EUR")
-                        value = col / usdToEUR;
-                    else
-                        value = (col * Number(course[selectInfo[i][0]])) / course[selectInfo[i][1]];
-                    currItem[1].value = value.toFixed(3);
-                }
-            })
+                header.addEventListener('click', () => {
+                    body.style.width = `${header.offsetWidth}px`;
+                    body.classList.toggle('is-active');
+                });
 
+                items.forEach((item) => {
+                    item.addEventListener('click', () => {
+                        currentCurrency.innerText = item.innerText;
+                        selectInfo[i][j] = item.innerText;
+                        body.classList.toggle('is-active');
+                        updateCourse(i, infoLabel, inputs);
+                    });
+                });
+            });
 
-        }
-    }
-    selectCurrcency();
+            inputs[0].addEventListener('input', () => {
+                const col = parseFloat(inputs[0].value) || 0;
+                inputs[1].value = calculateValue(col, selectInfo[i], course, usdToEUR, eurToUSD).toFixed(3);
+            });
 
-
-    function setCourse(str) {
-        const currencyExchangeWrapper = document.querySelectorAll('.currencyExchange-wrapper');
-        const infoLabel = currencyExchangeWrapper[str].querySelector('.info-label');
-        let value = course[selectInfo[str][0]] / course[selectInfo[str][1]];
-        if (selectInfo[str][0] === "EUR" && selectInfo[str][1] === "USD")
-            value = eurToUSD;
-        else if (selectInfo[str][0] === "USD" && selectInfo[str][1] === "EUR")
-            value = usdToEUR;
-        infoLabel.innerText = `1 ${selectInfo[str][0]} = ${value.toFixed(3)} ${selectInfo[str][1]}`;
-        
-        const inputEvent = new Event('input', {
-            bubbles: true,
-            cancelable: true
+            crossInputs.forEach((crossInput, index) => {
+                crossInput.addEventListener('input', () => {
+                    const value = parseFloat(crossInput.value) || 0;
+                    if (index === 0) eurToUSD = value;
+                    if (index === 1) usdToEUR = value;
+                    updateAllCourses();
+                });
+            });
         });
-        const currItem = currencyExchangeWrapper[str].querySelectorAll('.currency-item input');
-        currItem[0].dispatchEvent(inputEvent);
     }
 
-    setCourse(0);
-    setCourse(1);
-    setCourse(2);
-}
+    function calculateValue(amount, currencies, rates, usdToEUR, eurToUSD) {
+        const [from, to] = currencies;
+        if (from === "EUR" && to === "USD") return amount * eurToUSD;
+        if (from === "USD" && to === "EUR") return amount / usdToEUR;
+        return (amount * (rates[from] || 0)) / (rates[to] || 1);
+    }
 
-function setExchangeValue(str, value) {
-    const currencyExchangeWrapper = document.querySelectorAll('.currencyExchange-wrapper');
-    const currItem = currencyExchangeWrapper[str].querySelectorAll('.currency-item input');
-    if (currItem) {
-        currItem[0].value = value;
-        const inputEvent = new Event('input', {
-            bubbles: true,
-            cancelable: true
+    function updateCourse(index, infoLabel, inputs) {
+        const [from, to] = selectInfo[index];
+        const value =
+            from === "EUR" && to === "USD"
+                ? eurToUSD
+                : from === "USD" && to === "EUR"
+                ? usdToEUR
+                : (course[from] || 0) / (course[to] || 1);
+
+        infoLabel.innerText = `1 ${from} = ${value.toFixed(3)} ${to}`;
+
+        const inputEvent = new Event('input', { bubbles: true, cancelable: true });
+        inputs[0].dispatchEvent(inputEvent);
+    }
+
+    function updateAllCourses() {
+        const wrappers = document.querySelectorAll('.currencyExchange-wrapper');
+        wrappers.forEach((wrapper, i) => {
+            const infoLabel = wrapper.querySelector('.info-label');
+            const inputs = wrapper.querySelectorAll('.currency-item input');
+            updateCourse(i, infoLabel, inputs);
         });
-        currItem[0].dispatchEvent(inputEvent);
     }
+
+    selectCurrency();
+    updateAllCourses();
 }
 
 lastUpdate();
