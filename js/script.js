@@ -933,7 +933,7 @@ function getAuctionAmerica(carPrise) {
 
 function lastUpdate() {
     let selectInfo = [
-        ["USD", "UAH", "EUR"],
+        ["EUR", "UAH", "USD"],
         ["USD", "UAH", "EUR"],
         ["USD", "UAH", "EUR"]
     ];
@@ -972,25 +972,24 @@ function lastUpdate() {
                 }
             }
 
-            const btnExchangeCurrency = currencyExchangeWrapper[i].querySelector(".btn-exchange-currency");
-            btnExchangeCurrency.addEventListener('click', () => {
-                const currItem = currencyExchangeWrapper[i].querySelectorAll('.currency-item input');
-                if (currItem) {
-                    const col = Number(currItem[0].value);
-                    if (col == NaN || col == undefined || col === 0) {
-                        currItem[0].focus();
-                    } else {
-                        let value = 0;
-                        if (selectInfo[i][0] === "EUR" && selectInfo[i][1] === "USD")
-                            value = col * eurToUSD;
-                        else if (selectInfo[i][0] === "USD" && selectInfo[i][1] === "EUR")
-                            value = col * usdToEUR;
-                        else
-                            value = (col * Number(course[selectInfo[i][0]])) / course[selectInfo[i][1]];
-                        currItem[1].value = value.toFixed(3);
-                    }
+            const currItem = currencyExchangeWrapper[i].querySelectorAll('.currency-item input');
+            currItem[0].addEventListener('input', () => {
+                const col = Number(currItem[0].value);
+                if (col == NaN || col == undefined) {
+                    currItem[0].focus();
+                } else {
+                    let value = 0;
+                    if (selectInfo[i][0] === "EUR" && selectInfo[i][1] === "USD")
+                        value = col * eurToUSD;
+                    else if (selectInfo[i][0] === "USD" && selectInfo[i][1] === "EUR")
+                        value = col * usdToEUR;
+                    else
+                        value = (col * Number(course[selectInfo[i][0]])) / course[selectInfo[i][1]];
+                    currItem[1].value = value.toFixed(3);
                 }
             })
+
+
         }
     }
     selectCurrcency();
@@ -1005,6 +1004,13 @@ function lastUpdate() {
         else if (selectInfo[str][0] === "USD" && selectInfo[str][1] === "EUR")
             value = usdToEUR;
         infoLabel.innerText = `1 ${selectInfo[str][0]} = ${value.toFixed(3)} ${selectInfo[str][1]}`;
+        
+        const inputEvent = new Event('input', {
+            bubbles: true,
+            cancelable: true
+        });
+        const currItem = currencyExchangeWrapper[str].querySelectorAll('.currency-item input');
+        currItem[0].dispatchEvent(inputEvent);
     }
 
     setCourse(0);
@@ -1015,8 +1021,14 @@ function lastUpdate() {
 function setExchangeValue(str, value) {
     const currencyExchangeWrapper = document.querySelectorAll('.currencyExchange-wrapper');
     const currItem = currencyExchangeWrapper[str].querySelectorAll('.currency-item input');
-    if (currItem)
+    if (currItem) {
         currItem[0].value = value;
+        const inputEvent = new Event('input', {
+            bubbles: true,
+            cancelable: true
+        });
+        currItem[0].dispatchEvent(inputEvent);
+    }
 }
 
 lastUpdate();
