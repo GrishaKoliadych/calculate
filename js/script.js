@@ -68,7 +68,6 @@ for (let i = 0; i < items_CC_country.length; i++) {
 
 calc_CC.querySelector(".neon").addEventListener('change', () => {
     buttonCC = calc_CC.querySelector(".neon").checked ? 250 : 0;
-    console.log("s");
 });
 
 //КНОПКА РОЗРАХУНКУ ЦIНИ ОДИНОЧНИЙ
@@ -116,9 +115,11 @@ function calculate_CC(country, priceCar, priceService, priceEurope) {
     labelInfoForAuto[3].innerText = getFormatValue(priceSwift);
     labelInfoForAuto[5].innerText = getFormatValue(allPriceCar);
     priceCar_CC_Buff = allPriceCar + 100;
+
     function getFormatValue(value) {
         return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(value);
     }
+    setExchangeValue(0, allPriceCar.toFixed(2));
 }
 
 
@@ -200,6 +201,8 @@ btn_calc_CC_clearance.addEventListener('click', () => {
     function getFormatValue(value) {
         return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(value);
     }
+
+    setExchangeValue(0, (Number(priceCar_CC_Buff) + Number(customsclearance)).toFixed(2));
 });
 
 
@@ -248,7 +251,8 @@ $(document).ready(function() {
             let textFieldInput = cWInstance.find(".text-field__input");
             let rightInfo = cWInstance.find(".right-info");
             for (let i = 0; i < textFieldInput.length; i++) {
-                if (textFieldInput.eq(i).val() === '') {
+                if (textFieldInput.eq(i).val() === '' && textFieldInput.eq(i).attr('name') != 'fix-check') {
+                    console.log(textFieldInput.eq(i).name);
                     textFieldInput.eq(i).focus();
                     return;
                 }
@@ -318,6 +322,8 @@ $(document).ready(function() {
         [0, 1, 2, 4, 6, 7, 8, 9].forEach((index, i) => {
             rightInfo.eq(index).text(formattedValues[i]);
         });
+
+        setExchangeValue(1, (priceAll + del).toFixed(2));
     }
     
     function getFormatValue(value) {
@@ -819,6 +825,7 @@ btn_calc_America.addEventListener('click', () => {
     function getFormatValue(value) {
         return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
     }
+    setExchangeValue(2, allPrice.toFixed(2));
 });
 
 
@@ -919,12 +926,24 @@ function getAuctionAmerica(carPrise) {
 }
 
 
+
+
+
+
+
 function lastUpdate() {
     let selectInfo = [
         ["USD", "UAH", "EUR"],
         ["USD", "UAH", "EUR"],
         ["USD", "UAH", "EUR"]
     ];
+
+    let course = [];
+    course['USD'] = 41.65;
+    course['EUR'] = 44.2;
+    course['UAH'] = 1;
+    let usdToEUR = 1.062;
+    let eurToUSD = 1.054;
 
     function selectCurrcency() {
         //SELECT ОБМІНУ ВАЛЮТ
@@ -954,19 +973,21 @@ function lastUpdate() {
             }
 
             const btnExchangeCurrency = currencyExchangeWrapper[i].querySelector(".btn-exchange-currency");
-            btnExchangeCurrency.addEventListener('click', async () => {
+            btnExchangeCurrency.addEventListener('click', () => {
                 const currItem = currencyExchangeWrapper[i].querySelectorAll('.currency-item input');
                 if (currItem) {
                     const col = Number(currItem[0].value);
                     if (col == NaN || col == undefined || col === 0) {
                         currItem[0].focus();
                     } else {
-                        const info = await getExchangeRates();
-                        if (info) {
-                            info['UAH'] = 1;
-                            const value = (col * Number(info[selectInfo[i][0]])) / info[selectInfo[i][1]];
-                            currItem[1].value = value.toFixed(2);
-                        }
+                        let value = 0;
+                        if (selectInfo[i][0] === "EUR" && selectInfo[i][1] === "USD")
+                            value = col * eurToUSD;
+                        else if (selectInfo[i][0] === "USD" && selectInfo[i][1] === "EUR")
+                            value = col * usdToEUR;
+                        else
+                            value = (col * Number(course[selectInfo[i][0]])) / course[selectInfo[i][1]];
+                        currItem[1].value = value.toFixed(3);
                     }
                 }
             })
@@ -974,45 +995,28 @@ function lastUpdate() {
     }
     selectCurrcency();
 
-    async function getExchangeRates() {
-        let info = {};
-        const url = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json';
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`Помилка: ${response.status}`);
-            }
-            const data = await response.json();
-            const currencies = ['USD', 'EUR'];
-            const rates = data.filter(item => currencies.includes(item.cc));
-            
-            rates.forEach(rate => {
-                info[rate.cc] = rate.rate;
-            });
-            return info;
-        } catch (error) {
-            console.error('Помилка при отриманні даних:', error);
-        }
-    }
 
-    async function setCourse(str) {
+    function setCourse(str) {
         const currencyExchangeWrapper = document.querySelectorAll('.currencyExchange-wrapper');
         const infoLabel = currencyExchangeWrapper[str].querySelector('.info-label');
-        try {
-            const info = await getExchangeRates();
-            if (info) {
-                info['UAH'] = 1;
-                const value = info[selectInfo[str][0]] / info[selectInfo[str][1]];
-                infoLabel.innerText = `1 ${selectInfo[str][0]} = ${value.toFixed(2)} ${selectInfo[str][1]}`;
-            }
-        } catch (error) {
-            console.error('Помилка при встановлені курсу:', error);
-        }
+        let value = course[selectInfo[str][0]] / course[selectInfo[str][1]];
+        if (selectInfo[str][0] === "EUR" && selectInfo[str][1] === "USD")
+            value = eurToUSD;
+        else if (selectInfo[str][0] === "USD" && selectInfo[str][1] === "EUR")
+            value = usdToEUR;
+        infoLabel.innerText = `1 ${selectInfo[str][0]} = ${value.toFixed(3)} ${selectInfo[str][1]}`;
     }
 
     setCourse(0);
     setCourse(1);
     setCourse(2);
+}
+
+function setExchangeValue(str, value) {
+    const currencyExchangeWrapper = document.querySelectorAll('.currencyExchange-wrapper');
+    const currItem = currencyExchangeWrapper[str].querySelectorAll('.currency-item input');
+    if (currItem)
+        currItem[0].value = value;
 }
 
 lastUpdate();
