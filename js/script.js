@@ -92,7 +92,7 @@ btn_calc_CC_Price.addEventListener('click', () => {
 function calculate_CC(country, priceCar, priceService, priceEurope) {
     const priceCarAuction = priceCar + crossBorder[country] + processingDocs[country]; //ВАРТIСТЬ АВТО + АУК ЗБIР
     const broker = 250; //БРОКЕР
-    const certificate = 100; //СЕРТИФIКАТ
+    const certificate = 100; //СЕРТИФIКЦІЯ
 
     const priceColl = collection[country];
     const priceSwift = (100 + (0.032 * (priceCarAuction + priceColl))); //СВIФТ
@@ -120,6 +120,11 @@ function calculate_CC(country, priceCar, priceService, priceEurope) {
         return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(value);
     }
     setExchangeValue(0, allPriceCar.toFixed(2));
+
+    //Вартість лоту + аук збір + Доставка по Європі + Доставка до україни + Брокер + Сертифікація + Свіфт
+    const labelPayment = ouptuts_Main_CC.querySelector(".ri-payment");
+    const payment_Three = priceCarAuction + priceEurope + priceUK + broker + 350 + priceSwift;
+    labelPayment.innerText = getFormatValue(payment_Three);
 }
 
 
@@ -214,7 +219,6 @@ btn_calc_CC_clearance.addEventListener('click', () => {
 
 
 $(document).ready(function() {
-    let calcCost = $(".calc-cost");
     let calcwh = $(".calc-wholesale");
 
     //ОПТОВИЙ КАЛЬКУЛЯТОР
@@ -323,12 +327,15 @@ $(document).ready(function() {
         });
 
         setExchangeValue(1, (priceAll + del).toFixed(2));
+        //Вартість лоту + аук збір + Доставка по Європі + Доставка до україни + Брокер + Сертифікація + Свіфт
+        const labelPayment = container.find(".ri-payment")
+        const payment_Three = Number(priceCar) + Number(priceEurope) + Number(priceDelivery) + Number(del) + Number(priceService) + 350 + Number(priceSwift);
+        labelPayment.text(getFormatValue(payment_Three));
     }
     
     function getFormatValue(value) {
         return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(value);
     }
-    
 });
 
 
@@ -825,6 +832,12 @@ btn_calc_America.addEventListener('click', () => {
         return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value);
     }
     setExchangeValue(2, allPrice.toFixed(2));
+
+    //Вартість лоту + аук збір + Доставка по суші + Доставка по морю + Свіфт + 1000
+    const labelPayment = calc_america.querySelector(".ri-payment");
+    const payment_Three = Number(auctionFee) + Number(carPrice) + Number(deliveryPort) + Number(deliverySea) + Number(priceSwift) + 1000;
+    labelPayment.innerText = getFormatValue(payment_Three);
+
 });
 
 
