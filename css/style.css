@@ -182,6 +182,7 @@ input[type="number"]:focus {
 }
 
 .inputs-item-flex {
+    position: relative;
     width: 45%;
 }
 
@@ -191,6 +192,13 @@ input[type="number"]:focus {
 
 .inputs-item-flex:last-child {
     margin-left: 4%;
+}
+
+
+.inputs-item-flex:last-child .btn-wrapper {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
 }
 
 .btn-clearance {
@@ -212,7 +220,7 @@ a {
     box-shadow: 0px 0px 10px -2px #41bda8;
 }
 
-.left-info {
+.left-info, .li-payment {
     float: left;
     padding-left: 10px;
     padding-bottom: 5px;
@@ -221,7 +229,7 @@ a {
     margin-bottom: 25px;
 }
 
-.right-info {
+.right-info, .ri-payment {
     float: right;
     padding-right: 10px;
     padding-bottom: 5px;
