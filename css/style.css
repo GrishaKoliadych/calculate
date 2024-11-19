@@ -41,7 +41,7 @@ body {
     margin-top: 1%;
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 20px;
 }
 
@@ -49,7 +49,7 @@ body {
     margin-top: 1%;
     justify-content: space-around;
     /* align-items: stretch; */
-    align-items: center;
+    align-items: flex-start;
     display: none;
     margin-bottom: 20px;
 }
@@ -58,9 +58,22 @@ body {
     margin-top: 1%;
     justify-content: space-around;
     /* align-items: stretch; */
-    align-items: center;
+    align-items: flex-start;
     display: none;
     margin-bottom: 20px;
+}
+
+.settings-svg {
+    width: 30px;
+    display: flex;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    cursor: pointer;
+}
+
+.settings-svg path {
+    fill: #007FFF;
 }
 
 .inputs, .outputs {
@@ -461,7 +474,7 @@ a {
 .d_flex {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    /* align-items: center; */
 }
 
 .currencyExchange-wrapper {
@@ -529,4 +542,58 @@ a {
 
 .currencyExchange-wrapper .select-item {
     padding: 4px;
+}
+
+
+.currency-cross-wrapper {
+    display: none;
+    /* display: flex; */
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 9;
+}
+
+.currency-cross-wrapper .fon {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 11;
+    background-color: rgba(255, 255, 255, 0.4)
+}
+
+.currency-cross-wrapper .currency-cross-main {
+    z-index: 12;
+    border-radius: 5px;
+    padding: 20px;
+    position: absolute;
+    width: 20%;
+    left: 40%;
+    top: 30%;
+    background-color: #363636;
+    color: white;
+}
+
+.currency-cross-wrapper .title-cross {
+    text-align: center;
+    font-size: 2em;
+}
+
+.currency-cross-wrapper .btn-save-cross {
+    background-color: #007FFF;
+    padding: 10px 10px !important;
+    white-space: nowrap;
+    font-size: 0.9em;
+    border-radius: 5px;
+    font-weight: 600;
+    text-align: center;
+    float: left;
+    width: 100%;
+}
+
+.currency-cross-wrapper .btn-save-cross:hover {
+    cursor: pointer;
 }
