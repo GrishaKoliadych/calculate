@@ -48,7 +48,6 @@ body {
 .calc-wholesale {
     margin-top: 1%;
     justify-content: space-around;
-    /* align-items: stretch; */
     align-items: flex-start;
     display: none;
     margin-bottom: 20px;
@@ -57,7 +56,14 @@ body {
 .calc-america {
     margin-top: 1%;
     justify-content: space-around;
-    /* align-items: stretch; */
+    align-items: flex-start;
+    display: none;
+    margin-bottom: 20px;
+}
+
+.calc-address-delivery {
+    margin-top: 1%;
+    justify-content: space-around;
     align-items: flex-start;
     display: none;
     margin-bottom: 20px;
@@ -66,7 +72,7 @@ body {
 .settings-svg {
     width: 30px;
     display: flex;
-    position: absolute;
+    position: fixed;
     right: 20px;
     bottom: 20px;
     cursor: pointer;
@@ -248,40 +254,6 @@ a {
     font-size: 16px;
     font-style: italic;
     border-bottom: none;
-}
-
-@media screen and (max-width: 950px) {
-    .d_flex {
-        display: block !important;
-    }
-    .link-fix {
-        margin-top: 10px;
-    }
-
-    .inputs, .outputs {
-        width: 100%;
-        padding: 10px 10px;
-        white-space: nowrap;
-    }
-    
-    .calc-cost {
-        display: block;
-    }
-    
-    .calc-wholesale {
-        display: none;
-    }
-
-    .tab-main {
-        font-size: 0.9em;
-    }
-    
-    .inputs, .outputs {
-        margin-top: 5%;
-        font-size: 0.8em;
-        margin-bottom: 5%;
-    }
-
 }
 
 @property --x {
@@ -493,7 +465,6 @@ a {
 .d_flex {
     display: flex;
     justify-content: space-between;
-    /* align-items: center; */
 }
 
 .currencyExchange-wrapper {
@@ -566,7 +537,6 @@ a {
 
 .currency-cross-wrapper {
     display: none;
-    /* display: flex; */
     position: absolute;
     width: 100%;
     height: 100%;
@@ -615,4 +585,91 @@ a {
 
 .currency-cross-wrapper .btn-save-cross:hover {
     cursor: pointer;
+}
+
+
+
+@media screen and (max-width: 950px) {
+
+    .tabs-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .tabs-wrapper::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tab-main {
+        flex: 0 0 auto;
+        font-size: 0.9em;
+        font-weight: 600;
+        padding: 10px 10px !important;
+    }
+
+    .active {
+        background-color: #007FFF;
+    }
+
+    .d_flex {
+        display: block !important;
+    }
+
+    .link-fix {
+        margin-top: 10px;
+    }
+
+    .inputs, .outputs {
+        width: 100%;
+        padding: 10px 10px;
+        white-space: nowrap;
+    }
+    
+    .calc-cost {
+        display: block;
+    }
+    
+    .calc-wholesale {
+        display: none;
+    }
+    
+    .inputs, .outputs {
+        margin-top: 5%;
+        font-size: 0.8em;
+        margin-bottom: 5%;
+    }
+
+    .currency-cross-wrapper {
+        height: 100%;
+        position: fixed;
+    }
+    
+    .currency-cross-wrapper .fon {
+        height: 100%;
+    }
+    
+    .currency-cross-wrapper .currency-cross-main {
+        padding: 20px;
+        width: 80%;
+        left: 10%;
+        top: 30%;
+    }
+    
+    .currency-cross-wrapper .currency-cross-main input {
+        width: 100%;
+    }
+
+    .currency-cross-wrapper .title-cross {
+        text-align: center;
+        font-size: 2em;
+    }
+    
+    .currency-cross-wrapper .btn-save-cross {
+        padding: 10px 10px !important;
+        width: 100%;
+    }
+
 }
