@@ -1233,7 +1233,7 @@ btnCalcAddressDeliveryDirector.addEventListener('click', () => {
     let cost = fuelConsumption + salary + amortization + service; //Собівартість перевезення
     if (delivery >= 0 && delivery <= 200) cost += 5000;
     else if (delivery >= 201 && delivery <= 400) cost += 7500;
-    else if (delivery >= 401 && delivery <= 800) cost += 12000;
+    else if (delivery >= 401) cost += 12000;
 
 
     const calc_addrDeliv = $(".calc-address-delivery-director");
