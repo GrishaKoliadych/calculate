@@ -19,7 +19,7 @@ let buttonCC = 0; //КНОПКА ОДИНОЧНИЙ
 const calc_CC = document.querySelector(".calc-cost");
 const calc_WH = document.querySelector(".calc-wholesale");
 const calc_america = document.querySelector(".calc-america");
-// const calc_addressDelivery = document.querySelector(".calc-address-delivery");
+const calc_addressDelivery = document.querySelector(".calc-address-delivery");
 const tabMain = document.querySelectorAll(".tab-main");
 
 //ТАБИ
@@ -33,27 +33,26 @@ for (let i = 0; i < tabMain.length; i++) {
             else calc_CC.style.display = "block";
             calc_WH.style.display = "none";
             calc_america.style.display = "none";
-            // calc_addressDelivery.style.display = "none";
+            calc_addressDelivery.style.display = "none";
         } else if (i == 1) {
             if (window.outerWidth > 950) calc_WH.style.display = "flex";
             else calc_WH.style.display = "block";
             calc_CC.style.display = "none";
             calc_america.style.display = "none";
-            // calc_addressDelivery.style.display = "none";
+            calc_addressDelivery.style.display = "none";
         } else if (i == 2) {
             if (window.outerWidth > 950) calc_america.style.display = "flex";
             else calc_america.style.display = "block";
             calc_CC.style.display = "none";
             calc_WH.style.display = "none";
-            // calc_addressDelivery.style.display = "none";
-        } 
-        // else {
-        //     if (window.outerWidth > 950) calc_addressDelivery.style.display = "flex";
-        //     else calc_addressDelivery.style.display = "block";
-        //     calc_CC.style.display = "none";
-        //     calc_WH.style.display = "none";
-        //     calc_america.style.display = "none";
-        // }
+            calc_addressDelivery.style.display = "none";
+        } else {
+            if (window.outerWidth > 950) calc_addressDelivery.style.display = "flex";
+            else calc_addressDelivery.style.display = "block";
+            calc_CC.style.display = "none";
+            calc_WH.style.display = "none";
+            calc_america.style.display = "none";
+        }
     });
 }
 
@@ -1096,46 +1095,46 @@ function setExchangeValue(str, value) {
     }
 }
 
-// const btnCalcAddressDelivery = document.querySelector(".btn-calc-address-delivery");
-// btnCalcAddressDelivery.addEventListener('click', () => {
-//     const delivery_input = calc_addressDelivery.querySelector('input');
-//     if (delivery_input.value == '' || delivery_input.value <= 0) {
-//         delivery_input.focus();
-//         return;
-//     }
-//     const delivery = Number(delivery_input.value);
+const btnCalcAddressDelivery = document.querySelector(".btn-calc-address-delivery");
+btnCalcAddressDelivery.addEventListener('click', () => {
+    const delivery_input = calc_addressDelivery.querySelector('input');
+    if (delivery_input.value == '' || delivery_input.value <= 0) {
+        delivery_input.focus();
+        return;
+    }
+    const delivery = Number(delivery_input.value);
 
-//     let salaryCourse = 3;
-//     if (delivery >= 100 && delivery <= 300) salaryCourse = 3;
-//     else if (delivery >= 301 && delivery <= 500) salaryCourse = 2.7;
-//     else if (delivery >= 501 && delivery <= 700) salaryCourse = 2.5;
-//     else if (delivery >= 701 && delivery <= 1000) salaryCourse = 2.2;
+    let salaryCourse = 3;
+    if (delivery >= 100 && delivery <= 300) salaryCourse = 3;
+    else if (delivery >= 301 && delivery <= 500) salaryCourse = 2.7;
+    else if (delivery >= 501 && delivery <= 700) salaryCourse = 2.5;
+    else if (delivery >= 701 && delivery <= 1000) salaryCourse = 2.2;
     
-//     const fuelCost = 0.12; //Витрата палива на 1 км (12л/100км)
-//     const fuelPrice = 50; //Вартість палива за літр
+    const fuelCost = 0.12; //Витрата палива на 1 км (12л/100км)
+    const fuelPrice = 50; //Вартість палива за літр
 
-//     let fuelConsumption = delivery * fuelCost * fuelPrice; //Витрати пального
-//     let salary = Math.min(Math.max(delivery * salaryCourse, 500), 2000); //ЗП водію
+    let fuelConsumption = delivery * fuelCost * fuelPrice; //Витрати пального
+    let salary = Math.min(Math.max(delivery * salaryCourse, 500), 2000); //ЗП водію
 
-//     const amortization = (fuelConsumption + salary) * 0.007; //Амортизація
-//     const service = (fuelConsumption + salary) * 0.01; //Обслуговування
+    const amortization = (fuelConsumption + salary) * 0.007; //Амортизація
+    const service = (fuelConsumption + salary) * 0.01; //Обслуговування
 
-//     const calc_addrDeliv = $(".calc-address-delivery");
+    const calc_addrDeliv = $(".calc-address-delivery");
 
-//     let rightInfo = calc_addrDeliv.find(".right-info");
-//     const formattedValues = [
-//         fuelConsumption,
-//         salary,
-//         amortization,
-//         service,
-//         fuelConsumption + salary + amortization + service
-//     ].map(getFormatValue);
+    let rightInfo = calc_addrDeliv.find(".right-info");
+    const formattedValues = [
+        fuelConsumption,
+        salary,
+        amortization,
+        service,
+        fuelConsumption + salary + amortization + service
+    ].map(getFormatValue);
 
-//     [0, 1, 2, 3, 4].forEach((index, i) => {
-//         rightInfo.eq(index).text(formattedValues[i]);
-//     });
+    [0, 1, 2, 3, 4].forEach((index, i) => {
+        rightInfo.eq(index).text(formattedValues[i]);
+    });
 
-//     function getFormatValue(value) {
-//         return new Intl.NumberFormat('uk-UA', { style: 'currency', currency: 'UAH' }).format(value);
-//     }
-// });
+    function getFormatValue(value) {
+        return new Intl.NumberFormat('uk-UA', { style: 'currency', currency: 'UAH' }).format(value);
+    }
+});
