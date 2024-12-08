@@ -61,7 +61,7 @@ body {
     margin-bottom: 20px;
 }
 
-.calc-address-delivery {
+.calc-address-delivery-manager, .calc-address-delivery-logist, .calc-address-delivery-director {
     margin-top: 1%;
     justify-content: space-around;
     align-items: flex-start;
@@ -587,7 +587,9 @@ a {
     cursor: pointer;
 }
 
-
+#for-1, #for-2, #for-3 {
+    display: none;
+}
 
 @media screen and (max-width: 950px) {
 
