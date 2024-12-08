@@ -1192,7 +1192,7 @@ btnCalcAddressDeliveryLogist.addEventListener('click', () => {
 
     if (delivery >= 0 && delivery <= 200) cost += 5000;
     else if (delivery >= 201 && delivery <= 400) cost += 7500;
-    else if (delivery >= 401 && delivery <= 800) cost += 12000;
+    else if (delivery >= 401) cost += 12000;
 
     let rightInfo = calc_addressDeliveryLogist.querySelector(".right-info");
     rightInfo.innerText = getFormatValue(cost);
