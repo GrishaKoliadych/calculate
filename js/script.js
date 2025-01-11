@@ -1,3 +1,24 @@
+const url = window.location.href;
+if (url.includes('manager')) {
+    const a = document.querySelectorAll('#for-1');
+    for (let i = 0; i < a.length; i++) {
+        a[i].style.display = 'block';
+    }
+}
+if (url.includes('logist')) {
+    const a = document.querySelectorAll('#for-2');
+    for (let i = 0; i < a.length; i++) {
+        a[i].style.display = 'block';
+    }
+}
+if (url.includes('director')) {
+    const a = document.querySelectorAll('#for-3');
+    for (let i = 0; i < a.length; i++) {
+        a[i].style.display = 'block';
+    }
+}
+
+
 let CWFuel = 0; //ТИП ПАЛИВА ОПТОВИЙ
 
 let CWcountry = 0; //КРАIНА ОПТОВИЙ
@@ -19,6 +40,9 @@ let buttonCC = 0; //КНОПКА ОДИНОЧНИЙ
 const calc_CC = document.querySelector(".calc-cost");
 const calc_WH = document.querySelector(".calc-wholesale");
 const calc_america = document.querySelector(".calc-america");
+const calc_addressDeliveryManager = document.querySelector(".calc-address-delivery-manager");
+const calc_addressDeliveryLogist = document.querySelector(".calc-address-delivery-logist");
+const calc_addressDeliveryDirector = document.querySelector(".calc-address-delivery-director");
 const tabMain = document.querySelectorAll(".tab-main");
 
 //ТАБИ
@@ -27,21 +51,32 @@ for (let i = 0; i < tabMain.length; i++) {
         for (let j = 0; j < tabMain.length; j++)
             tabMain[j].classList.remove('active');
         tabMain[i].classList.add('active');
+
+        calc_CC.style.display = "none";
+        calc_WH.style.display = "none";
+        calc_america.style.display = "none";
+        calc_addressDeliveryManager.style.display = "none";
+        calc_addressDeliveryLogist.style.display = "none";
+        calc_addressDeliveryDirector.style.display = "none";
+
         if (i == 0) {
             if (window.outerWidth > 950) calc_CC.style.display = "flex";
             else calc_CC.style.display = "block";
-            calc_WH.style.display = "none";
-            calc_america.style.display = "none"
         } else if (i == 1) {
             if (window.outerWidth > 950) calc_WH.style.display = "flex";
             else calc_WH.style.display = "block";
-            calc_CC.style.display = "none";
-            calc_america.style.display = "none"
-        } else {
+        } else if (i == 2) {
             if (window.outerWidth > 950) calc_america.style.display = "flex";
             else calc_america.style.display = "block";
-            calc_CC.style.display = "none";
-            calc_WH.style.display = "none";
+        } else if (i == 3) {
+            if (window.outerWidth > 950) calc_addressDeliveryManager.style.display = "flex";
+            else calc_addressDeliveryManager.style.display = "block";
+        } else if (i == 4) {
+            if (window.outerWidth > 950) calc_addressDeliveryLogist.style.display = "flex";
+            else calc_addressDeliveryLogist.style.display = "block";
+        } else if (i == 5) {
+            if (window.outerWidth > 950) calc_addressDeliveryDirector.style.display = "flex";
+            else calc_addressDeliveryDirector.style.display = "block";
         }
     });
 }
@@ -1084,3 +1119,140 @@ function setExchangeValue(str, value) {
         currItem[0].dispatchEvent(inputEvent);
     }
 }
+
+const btnCalcAddressDelivery = document.querySelector(".btn-calc-address-delivery");
+btnCalcAddressDelivery.addEventListener('click', () => {
+    const delivery_input = calc_addressDeliveryManager.querySelector('input');
+    if (delivery_input.value == '' || delivery_input.value <= 0) {
+        delivery_input.focus();
+        return;
+    }
+    const delivery = Number(delivery_input.value);
+
+    let salaryCourse = 3;
+    if (delivery >= 100 && delivery <= 300) salaryCourse = 3;
+    else if (delivery >= 301 && delivery <= 500) salaryCourse = 2.7;
+    else if (delivery >= 501 && delivery <= 700) salaryCourse = 2.5;
+    else if (delivery >= 701 && delivery <= 1000) salaryCourse = 2.2;
+    
+    const fuelCost = 0.12; //Витрата палива на 1 км (12л/100км)
+    const fuelPrice = 50; //Вартість палива за літр
+
+    let fuelConsumption = delivery * fuelCost * fuelPrice; //Витрати пального
+    let salary = Math.min(Math.max(delivery * salaryCourse, 500), 2000); //ЗП водію
+
+    const amortization = (fuelConsumption + salary) * 0.007; //Амортизація
+    const service = (fuelConsumption + salary) * 0.01; //Обслуговування
+
+    const calc_addrDeliv = $(".calc-address-delivery-manager");
+
+    let rightInfo = calc_addrDeliv.find(".right-info");
+    const formattedValues = [
+        fuelConsumption,
+        salary,
+        amortization,
+        service,
+        fuelConsumption + salary + amortization + service
+    ].map(getFormatValue);
+
+    [0, 1, 2, 3, 4].forEach((index, i) => {
+        rightInfo.eq(index).text(formattedValues[i]);
+    });
+
+    function getFormatValue(value) {
+        return new Intl.NumberFormat('uk-UA', { style: 'currency', currency: 'UAH' }).format(value);
+    }
+});
+
+const btnCalcAddressDeliveryLogist = document.querySelector(".btn-calc-address-delivery-logist");
+btnCalcAddressDeliveryLogist.addEventListener('click', () => {
+    const delivery_input = calc_addressDeliveryLogist.querySelector('input');
+    if (delivery_input.value == '' || delivery_input.value <= 0) {
+        delivery_input.focus();
+        return;
+    }
+    const delivery = Number(delivery_input.value);
+
+    let salaryCourse = 3;
+    if (delivery >= 100 && delivery <= 300) salaryCourse = 3;
+    else if (delivery >= 301 && delivery <= 500) salaryCourse = 2.7;
+    else if (delivery >= 501 && delivery <= 700) salaryCourse = 2.5;
+    else if (delivery >= 701 && delivery <= 1000) salaryCourse = 2.2;
+    
+    const fuelCost = 0.12; //Витрата палива на 1 км (12л/100км)
+    const fuelPrice = 50; //Вартість палива за літр
+
+    let fuelConsumption = delivery * fuelCost * fuelPrice; //Витрати пального
+    let salary = Math.min(Math.max(delivery * salaryCourse, 500), 2000); //ЗП водію
+
+    const amortization = (fuelConsumption + salary) * 0.007; //Амортизація
+    const service = (fuelConsumption + salary) * 0.01; //Обслуговування
+
+    let cost = fuelConsumption + salary + amortization + service; //Собівартість перевезення
+
+    if (delivery >= 0 && delivery <= 200) cost += 5000;
+    else if (delivery >= 201 && delivery <= 400) cost += 7500;
+    else if (delivery >= 401) cost += 12000;
+
+    let rightInfo = calc_addressDeliveryLogist.querySelector(".right-info");
+    rightInfo.innerText = getFormatValue(cost);
+
+    function getFormatValue(value) {
+        return new Intl.NumberFormat('uk-UA', { style: 'currency', currency: 'UAH' }).format(value);
+    }
+})
+
+
+
+
+const btnCalcAddressDeliveryDirector = document.querySelector(".btn-calc-address-delivery-director");
+btnCalcAddressDeliveryDirector.addEventListener('click', () => {
+    const delivery_input = calc_addressDeliveryDirector.querySelector('input');
+    if (delivery_input.value == '' || delivery_input.value <= 0) {
+        delivery_input.focus();
+        return;
+    }
+    const delivery = Number(delivery_input.value);
+
+    let salaryCourse = 3;
+    if (delivery >= 100 && delivery <= 300) salaryCourse = 3;
+    else if (delivery >= 301 && delivery <= 500) salaryCourse = 2.7;
+    else if (delivery >= 501 && delivery <= 700) salaryCourse = 2.5;
+    else if (delivery >= 701 && delivery <= 1000) salaryCourse = 2.2;
+    
+    const fuelCost = 0.12; //Витрата палива на 1 км (12л/100км)
+    const fuelPrice = 50; //Вартість палива за літр
+
+    let fuelConsumption = delivery * fuelCost * fuelPrice; //Витрати пального
+    let salary = Math.min(Math.max(delivery * salaryCourse, 500), 2000); //ЗП водію
+
+    const amortization = (fuelConsumption + salary) * 0.007; //Амортизація
+    const service = (fuelConsumption + salary) * 0.01; //Обслуговування
+
+
+    let cost = fuelConsumption + salary + amortization + service; //Собівартість перевезення
+    if (delivery >= 0 && delivery <= 200) cost += 5000;
+    else if (delivery >= 201 && delivery <= 400) cost += 7500;
+    else if (delivery >= 401) cost += 12000;
+
+
+    const calc_addrDeliv = $(".calc-address-delivery-director");
+
+    let rightInfo = calc_addrDeliv.find(".right-info");
+    const formattedValues = [
+        fuelConsumption,
+        salary,
+        amortization,
+        service,
+        fuelConsumption + salary + amortization + service,
+        cost
+    ].map(getFormatValue);
+
+    [0, 1, 2, 3, 4, 5].forEach((index, i) => {
+        rightInfo.eq(index).text(formattedValues[i]);
+    });
+
+    function getFormatValue(value) {
+        return new Intl.NumberFormat('uk-UA', { style: 'currency', currency: 'UAH' }).format(value);
+    }
+});
