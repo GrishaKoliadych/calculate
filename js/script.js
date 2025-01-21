@@ -1179,7 +1179,7 @@ btnCalcAddressDeliveryLogist.addEventListener('click', () => {
     else if (delivery >= 501 && delivery <= 700) salaryCourse = 2.5;
     else if (delivery >= 701 && delivery <= 1000) salaryCourse = 2.2;
     
-    const fuelCost = 0.12; //Витрата палива на 1 км (12л/100км)
+    const fuelCost = 0.135; //Витрата палива на 1 км (12л/100км)
     const fuelPrice = 50; //Вартість палива за літр
 
     let fuelConsumption = delivery * fuelCost * fuelPrice; //Витрати пального
@@ -1190,9 +1190,9 @@ btnCalcAddressDeliveryLogist.addEventListener('click', () => {
 
     let cost = fuelConsumption + salary + amortization + service; //Собівартість перевезення
 
-    if (delivery >= 0 && delivery <= 200) cost += 5000;
-    else if (delivery >= 201 && delivery <= 400) cost += 7500;
-    else if (delivery >= 401) cost += 12000;
+    if (delivery >= 0 && delivery <= 200) cost += 5500;
+    else if (delivery >= 201 && delivery <= 400) cost += 8000;
+    else if (delivery >= 401) cost += 12500;
 
     let rightInfo = calc_addressDeliveryLogist.querySelector(".right-info");
     rightInfo.innerText = getFormatValue(cost);
@@ -1220,7 +1220,7 @@ btnCalcAddressDeliveryDirector.addEventListener('click', () => {
     else if (delivery >= 501 && delivery <= 700) salaryCourse = 2.5;
     else if (delivery >= 701 && delivery <= 1000) salaryCourse = 2.2;
     
-    const fuelCost = 0.12; //Витрата палива на 1 км (12л/100км)
+    const fuelCost = 0.135; //Витрата палива на 1 км (12л/100км)
     const fuelPrice = 50; //Вартість палива за літр
 
     let fuelConsumption = delivery * fuelCost * fuelPrice; //Витрати пального
@@ -1231,9 +1231,9 @@ btnCalcAddressDeliveryDirector.addEventListener('click', () => {
 
 
     let cost = fuelConsumption + salary + amortization + service; //Собівартість перевезення
-    if (delivery >= 0 && delivery <= 200) cost += 5000;
-    else if (delivery >= 201 && delivery <= 400) cost += 7500;
-    else if (delivery >= 401) cost += 12000;
+    if (delivery >= 0 && delivery <= 200) cost += 5500;
+    else if (delivery >= 201 && delivery <= 400) cost += 8000;
+    else if (delivery >= 401) cost += 12500;
 
 
     const calc_addrDeliv = $(".calc-address-delivery-director");
