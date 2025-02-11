@@ -29,6 +29,8 @@ const processingDocs = [249, 149, 269, 229, 259, 249, 229, 252, 189, 159]; //О�
 
 
 let country_CC = 0; //КРАIНА ОДИНОЧНИЙ
+let CWcountry = 0; //КРАЇНА ОПТОВИЙ КАЛЬКУЛЯТОР
+
 let fuelType_CC = 0; //ТИП ПАЛИВА ОДИНОЧНИЙ
 let priceCar_CC_Buff = 0; //БУФЕР ФIНАЛЬНОI ЦIНИ ДЛЯ РОЗМИТНЕННЯ
 let buttonCC = 0; //КНОПКА ОДИНОЧНИЙ
@@ -260,7 +262,9 @@ $(document).ready(function() {
         let items = sbody.find('.select-item');
         items.click(function() {
             current.text($(this).text());
-            if (sbody.hasClass('fuel-index')) {
+            if (sbody.hasClass('country-index')) {
+                CWcountry = $(this).index();
+            } else if (sbody.hasClass('fuel-index')) {
                 CWFuel = $(this).index();
             } else if (sbody.hasClass('auction-index')) {
                 CWAuction = $(this).index();
@@ -293,7 +297,7 @@ $(document).ready(function() {
 
     function calculateCost(container, fuel, auction, rightInfo) {
         let textFieldInput = container.find(".text-field__input");
-        const priceCarOlso = Number(textFieldInput.eq(0).val()); //Вартість авто + аук збір
+        let priceCarOlso = Number(textFieldInput.eq(0).val()); //Вартість авто + аук збір
         const priceDelivery = 450; // Доставка до україни
         const priceService = 250; // Вартість послуг
         const priceEurope = Number(textFieldInput.eq(1).val()); //Доставка по європі
@@ -301,6 +305,8 @@ $(document).ready(function() {
         const engineCapacity = Number(textFieldInput.eq(3).val()); //Обєм двигуна
         let broker = 0; // Брокер
         let documents = 0; //Сертифікація
+
+        const priceColl =  collection[CWcountry]; //Аук збір окремо
         
         //РОЗРАХУНОК РОЗМИТНЕННАЯ ПОЧАТОК
         let basikExcise = 0; //Базовий акциз
@@ -326,6 +332,7 @@ $(document).ready(function() {
             priceSwift = (25 + (0.03 * priceCarOlso)).toFixed(2);
             broker = 100;
             documents = 70;
+            priceCarOlso += priceColl;
         } else {
             priceSwift = (0.015 * priceCarOlso).toFixed(2);
             broker = 150;
