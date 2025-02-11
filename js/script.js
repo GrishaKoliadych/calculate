@@ -1,28 +1,24 @@
 const url = window.location.href;
 if (url.includes('manager')) {
-    const a = document.querySelectorAll('#for-1');
-    for (let i = 0; i < a.length; i++) {
-        a[i].style.display = 'block';
-    }
+    const a = document.querySelector('#for-1');
+    a.style.display = 'block';
 }
 if (url.includes('logist')) {
-    const a = document.querySelectorAll('#for-2');
-    for (let i = 0; i < a.length; i++) {
-        a[i].style.display = 'block';
-    }
+    const a = document.querySelector('#for-2');
+    a.style.display = 'block';
 }
 if (url.includes('director')) {
-    const a = document.querySelectorAll('#for-3');
-    for (let i = 0; i < a.length; i++) {
-        a[i].style.display = 'block';
-    }
+    const a = document.querySelector('#for-3');
+    a.style.display = 'block';
+}
+if (url.includes('opt')) {
+    const a = document.querySelector('#for-4');
+    a.style.display = 'block';
 }
 
 
 let CWFuel = 0; //ТИП ПАЛИВА ОПТОВИЙ
 
-let CWcountry = 0; //КРАIНА ОПТОВИЙ
-let CWButton = 0; //КНОПКА ОПТОВИЙ
 const collection = [700, 700, 700, 800, 800, 700, 900, 900, 900, 900]; //АУК ЗБIР
 
 const crossBorder = [139, 99, 89, 185, 149, 139, 245, 149, 379, 189]; //ТРАНСКОРДОННI
@@ -255,6 +251,7 @@ btn_calc_CC_clearance.addEventListener('click', () => {
 
 $(document).ready(function() {
     let calcwh = $(".calc-wholesale");
+    let CWAuction = 0; // 0 - auto1, 1 - openlane
 
     //ОПТОВИЙ КАЛЬКУЛЯТОР
     calcwh.find(".select-header-wholesale").each(function() {
@@ -263,24 +260,18 @@ $(document).ready(function() {
         let items = sbody.find('.select-item');
         items.click(function() {
             current.text($(this).text());
-            if (sbody.hasClass('country-index')) {
-                CWcountry = $(this).index();
-            } else if (sbody.hasClass('fuel-index')) {
+            if (sbody.hasClass('fuel-index')) {
                 CWFuel = $(this).index();
+            } else if (sbody.hasClass('auction-index')) {
+                CWAuction = $(this).index();
             }
             sbody.toggleClass("is-active");
         });
+
     
         $(this).click(function() {
             sbody.css("width", $(this).outerWidth());
             sbody.toggleClass("is-active");
-        });
-    });
-
-    calcwh.find(".neon").each(function() {
-        $(this).change(function() {
-            CWButton = this.checked ? 200 : 0;
-            $(this).closest('.calc-wholesale').find(".right-info").eq(6).text(CWButton + ",00 €");
         });
     });
     
@@ -295,24 +286,22 @@ $(document).ready(function() {
                     return;
                 }
             }
-            calculateCost(cWInstance, CWcountry, CWButton, CWFuel, rightInfo, true);
+            calculateCost(cWInstance, CWFuel, CWAuction, rightInfo);
         });
     });
 
 
-    function calculateCost(container, country, button, fuel, rightInfo, deliveryPrice) {
+    function calculateCost(container, fuel, auction, rightInfo) {
         let textFieldInput = container.find(".text-field__input");
-        const pliceCarOlso = Number(textFieldInput.eq(0).val());
-        const priceCar = Number(textFieldInput.eq(0).val()) + crossBorder[country] + processingDocs[country];
-        const priceColl = collection[country];
-        const priceDelivery = 450;
-        const priceService = Number(textFieldInput.eq(1).val());
-        const priceEurope = Number(textFieldInput.eq(2).val());
-
-        const yearRelease = Number(textFieldInput.eq(3).val());
-        const engineCapacity = Number(textFieldInput.eq(4).val());
+        const priceCarOlso = Number(textFieldInput.eq(0).val()); //Вартість авто + аук збір
+        const priceDelivery = 450; // Доставка до україни
+        const priceService = 250; // Вартість послуг
+        const priceEurope = Number(textFieldInput.eq(1).val()); //Доставка по європі
+        const yearRelease = Number(textFieldInput.eq(2).val()); // Рік випуску
+        const engineCapacity = Number(textFieldInput.eq(3).val()); //Обєм двигуна
+        let broker = 0; // Брокер
+        let documents = 0; //Сертифікація
         
-
         //РОЗРАХУНОК РОЗМИТНЕННАЯ ПОЧАТОК
         let basikExcise = 0; //Базовий акциз
         if (fuel == 0) {
@@ -322,50 +311,68 @@ $(document).ready(function() {
             if (engineCapacity <= 3500) basikExcise = 75;
             else basikExcise = 150;
         }
-
-
         let coeffYear = 2024 - yearRelease - 1; //Коефiцiєнт вiку
         if (coeffYear < 1) coeffYear = 1;
         else if (coeffYear > 15) coeffYear = 15;
-
         const excise = basikExcise * (engineCapacity / 1000) * coeffYear; //Акциз
-        const toll = pliceCarOlso * 0.1; //Мито
-
-        const pdv = (pliceCarOlso + toll + excise) * 0.2;
-
+        const toll = priceCarOlso * 0.1; //Мито
+        const pdv = (priceCarOlso + toll + excise) * 0.2;
         const customsclearance = toll + excise + pdv; //Розмитнення
         //РОЗРАХУНОЙ РОЗМИТНЕННЯ КIНЕЦЬ
 
-        const priceSwift = (100 + (0.032 * (priceCar + priceColl))).toFixed(2);
-        const priceAll = priceCar + priceColl + priceDelivery + priceService + Number(priceSwift) + 250 + 100 + button + priceEurope + customsclearance;
-    
-        let del = 0; // НАЦIНКА НА ДОСТАВКУ
-        if (deliveryPrice) {
-            if (priceAll < 6000) del = 550;
-            else if (priceAll <= 8000) del = 960;
-            else del = 1500;
+
+        let priceSwift = 0;
+        if (auction === 0) {
+            priceSwift = (25 + (0.03 * priceCarOlso)).toFixed(2);
+            broker = 100;
+            documents = 70;
+        } else {
+            priceSwift = (0.015 * priceCarOlso).toFixed(2);
+            broker = 150;
+            documents = 150;
         }
+        // const priceAll = priceCarOlso + priceDelivery + priceService + priceEurope + customsclearance;
+        const priceAll = priceCarOlso + priceDelivery + priceService + priceEurope + broker + documents + customsclearance;
+
     
         const formattedValues = [
-            priceCar,
-            priceDelivery + del,
+            priceCarOlso,
+            priceDelivery,
             priceEurope,
+            broker,
             priceService,
-            button,
-            priceSwift,
+            documents,
             customsclearance,
-            priceAll + del,
+            priceAll,
         ].map(getFormatValue);
     
-        [0, 1, 2, 4, 6, 7, 8, 9].forEach((index, i) => {
+        [0, 1, 2, 3, 4, 5, 6, 7].forEach((index, i) => {
             rightInfo.eq(index).text(formattedValues[i]);
         });
 
-        setExchangeValue(1, (priceAll + del).toFixed(2));
+        
+
+        console.log(`Вартість авто + аук збір: ${priceCarOlso}`);
+        console.log(`Доставка до україни ${priceDelivery}`);
+        console.log(`Доставка по європі ${priceEurope}`);
+        console.log(`Брокер ${broker}`);
+        console.log(`Вартість послуг ${priceService}`);
+        console.log(`Сертифікація ${documents}`);
+        console.log(`Розмитнення ${customsclearance}`);
+        console.log(`Загальна вартість авто ${priceAll}`);
+
+        console.log(`Свіфт ${priceSwift}`);
+
+
+
+        setExchangeValue(1, (priceAll).toFixed(2));
         //Вартість лоту + аук збір + Доставка по Європі + Доставка до україни + Брокер + Сертифікація + Свіфт
         const labelPayment = container.find(".ri-payment")
-        const payment_Three = Number(priceCar) + Number(priceEurope) + Number(priceDelivery) + Number(del) + Number(priceService) + 350 + Number(priceSwift);
+        const payment_Three = Number(priceCarOlso) + Number(priceEurope) + Number(priceDelivery) + Number(priceService) + Number(priceSwift);
         labelPayment.text(getFormatValue(payment_Three));
+
+        const labelSwift = container.find(".ri-swift");
+        labelSwift.text(getFormatValue(priceSwift));
     }
     
     function getFormatValue(value) {
