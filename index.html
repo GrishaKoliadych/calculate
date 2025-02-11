@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Калькулятор вартості авто</title>
+    <link rel="shortcut icon" href="dreamauto_logo_01.webp" type="image/png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="js/script.js" defer></script>
-    <link rel="shortcut icon" href="dreamauto_logo_01.webp" type="image/png">
 </head>
 <body>
     <div class="container-fluid">
@@ -16,7 +16,7 @@
             <div class="col-md-12 col-sm-12">
                 <div class="col-md-12 col-12 tabs-wrapper">
                     <div class="tab-main active">Калькулятор вартості</div>
-                    <div class="tab-main">Оптовий калькулятор</div>
+                    <div class="tab-main" id="for-4">Оптовий калькулятор</div>
                     <div class="tab-main">Калькулятор Америка</div>
                     <div class="tab-main" id="for-1">Калькулятор адресної доставки</div>
                     <div class="tab-main" id="for-2">Калькулятор адресної доставки</div>
@@ -139,33 +139,15 @@
 
                 <div class="col-md-12 col-sm-12 calc-wholesale">
                     <div class="col-md-5 col-sm-5 inputs">
-                        <div class="col-md-12 col-sm-12 title-inputs">Виберіть країну</div>
-                        <div class="select col-md-3 col-7">
-                            <div class="select-header select-header-wholesale"><span class="select-current">DE</span></div>
-                            <div class="select-body">
-                                <div class="select-item">DE</div>
-                                <div class="select-item">PL</div>
-                                <div class="select-item">FR</div>
-                                <div class="select-item">NL</div>
-                                <div class="select-item">AT</div>
-                                <div class="select-item">BE</div>
-                                <div class="select-item">ES</div>
-                                <div class="select-item">SE</div>
-                                <div class="select-item">IT</div>
-                                <div class="select-item">PT</div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-12 title-inputs">Вартість авто (€)</div>
+                        <div class="col-md-12 col-12 title-inputs">Вартість авто + аук збір</div>
                         <input class="text-field__input col-md-3 col-7" type="number" name="" id="" placeholder="Вартість авто">
-                        <div class="col-md-12 col-sm-12 title-inputs">Вартість послуг (€)</div>
-                        <input class="text-field__input col-md-3 col-7" type="number" name="" id="" placeholder="Вартість послуг">
-                        <div class="col-md-12 col-sm-12 title-inputs">Доставка по Європi (€)</div>
+                        <div class="col-md-12 col-sm-12 title-inputs">Доставка по Європi</div>
                         <input class="text-field__input col-md-3 col-7" type="number" name="" id="" placeholder="Доставка по Європi">
                         <div class="col-md-12 col-sm-12 title-inputs">Рік випуску автомобіля</div>
                         <input class="text-field__input col-md-3 col-7" type="number" name="" id="" placeholder="Рік випуску автомобіля">
                         <div class="col-md-12 col-sm-12 title-inputs">Тип двигуна</div>
                         <div class="select col-md-3 col-7">
-                            <div class="select-header"><span class="select-current">Бензиновий</span></div>
+                            <div class="select-header select-header-wholesale"><span class="select-current">Бензиновий</span></div>
                             <div class="select-body fuel-index">
                                 <div class="select-item">Бензиновий</div>
                                 <div class="select-item">Дизельний</div>
@@ -173,8 +155,16 @@
                         </div>
                         <div class="col-md-12 col-sm-12 title-inputs">Об'єм двигуна (см3)</div>
                         <input class="text-field__input col-md-3 col-7" type="number" name="" id="" placeholder="Об'єм двигуна">
-                        <div class="col-md-12 col-sm-12 title-inputs">Кнопка</div>
-                        <input type="checkbox" role="switch" class="neon">
+
+                        <div class="col-md-12 col-sm-12 title-inputs">Виберіть аукціон</div>
+                        <div class="select col-md-3 col-7">
+                            <div class="select-header select-header-wholesale"><span class="select-current">Auto1</span></div>
+                            <div class="select-body auction-index">
+                                <div class="select-item">Auto1</div>
+                                <div class="select-item">Openlane</div>
+                            </div>
+                        </div>
+
                         <div class="btn-wrapper col-md-12 col-sm-12">
                             <div class="btn-calc">Розрахувати вартість</div>
                         </div>
@@ -183,19 +173,15 @@
                         <div class="left-info col-md-8 col-9">Вартість авто + аукціонний збір</div>
                         <div class="right-info col-md-4 col-3">0,00 €</div>
                         <div class="left-info col-md-8 col-9">Доставка до України</div>
-                        <div class="right-info col-md-4 col-3">450,00 €</div>
+                        <div class="right-info col-md-4 col-3">0,00 €</div>
                         <div class="left-info col-md-8 col-9">Доставка по Європi</div>
                         <div class="right-info col-md-4 col-3">0,00 €</div>
                         <div class="left-info col-md-8 col-9">Брокер</div>
-                        <div class="right-info col-md-4 col-3">250,00 €</div>
+                        <div class="right-info col-md-4 col-3">0,00 €</div>
                         <div class="left-info col-md-8 col-9">Послуги з підбору</div>
                         <div class="right-info col-md-4 col-3">0,00 €</div>
                         <div class="left-info col-md-8 col-9">Сертифікація</div>
-                        <div class="right-info col-md-4 col-3">60,00 €</div>
-                        <div class="left-info col-md-8 col-9">Кнопка</div>
-                        <div class="right-info col-md-4 col-3">0,00 €</div>
-                        <div class="left-info col-md-8 col-9">Свіфт переказ</div>
-                        <div class="right-info col-md-4 col-3">100,00 €</div>
+                        <div class="right-info col-md-4 col-3">00,00 €</div>
                         <div class="left-info col-md-8 col-9">Розмитнення</div>
                         <div class="right-info col-md-4 col-3">0,00 €</div>
                         <div class="left-info col-md-8 col-9" style="font-weight: 700;">Загальна вартість авто</div>
@@ -203,6 +189,9 @@
 
                         <div class="li-payment col-md-8 col-9">Оплатити протягом 3-х днів</div>
                         <div class="ri-payment col-md-4 col-3">0,00 €</div>
+
+                        <div class="li-swift col-md-8 col-9">Свіфт переказ</div>
+                        <div class="ri-swift col-md-4 col-3">0,00 €</div>
 
                         <div class="col-md-12 col-12 d_flex">
                             <div class="currencyExchange-wrapper col-md-6">
